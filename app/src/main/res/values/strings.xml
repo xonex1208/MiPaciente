@@ -3,4 +3,8 @@
     <string name="registro_paciente">Registrate</string>
     <string name="registrarse">Registrarse</string>
     <string name="cancelar">Cancelar</string>
+    <string name="clinica">VitaDent</string>
+    <string name="login">Login</string>
+    <string name="entrar">Entrar</string>
+    <string name="registro_doctor">Registrate</string>
 </resources>
