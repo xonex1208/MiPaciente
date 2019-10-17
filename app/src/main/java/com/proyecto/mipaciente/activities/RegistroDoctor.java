@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.proyecto.mipaciente.R;
 
-public class RegistroPaciente extends AppCompatActivity {
+public class RegistroDoctor extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro_paciente);
+        setContentView(R.layout.activity_registro_doctor);
     }
 }
