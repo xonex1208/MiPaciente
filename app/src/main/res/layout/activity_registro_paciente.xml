@@ -21,10 +21,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="20sp"
                 android:textSize="25dp"
                 android:fontFamily="@font/roboto"
                 android:text="@string/registro_paciente" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Nombre">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registro_nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Apellidos">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registro_apellidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="E-mail">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registro_correo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <GridLayout
                 android:layout_width="wrap_content"
@@ -34,10 +75,11 @@
                 android:orientation="horizontal">
             <Button
                 android:id="@+id/btn_crear_limpiar"
+                android:layout_width="match_parent"
                 android:layout_columnSpan="2"
                 android:padding="15dp"
                 android:background="@drawable/boton_secundario"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textColor="@color/colorTextoSecundarioBoton"
                 android:fontFamily="@font/roboto"
                 android:text="@string/cancelar"></Button>
@@ -45,8 +87,9 @@
 
             <Button
                 android:id="@+id/btn_crear_guardar"
+                android:layout_width="match_parent"
                 android:padding="15dp"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:background="@drawable/boton_primario"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/colorTextoPrimarioBoton"
