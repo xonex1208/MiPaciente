@@ -154,7 +154,7 @@
                 android:columnCount="3"
                 android:orientation="horizontal">
             <Button
-                android:id="@+id/btn_crear_limpiar"
+                android:id="@+id/btn_cancelar_registro"
                 android:layout_width="match_parent"
                 android:layout_columnSpan="2"
                 android:padding="15dp"
@@ -166,7 +166,7 @@
 
 
             <Button
-                android:id="@+id/btn_crear_guardar"
+                android:id="@+id/btn_guardar_registro"
                 android:layout_width="match_parent"
                 android:padding="15dp"
                 android:textSize="15sp"

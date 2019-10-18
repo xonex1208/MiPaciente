@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "843247583708",
+    "firebase_url": "https://mipaciente-6ec10.firebaseio.com",
+    "project_id": "mipaciente-6ec10",
+    "storage_bucket": "mipaciente-6ec10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843247583708:android:cef60c2c1cfa789dad0f19",
+        "android_client_info": {
+          "package_name": "com.proyecto.mipaciente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843247583708-73rv1k70j2cgqkt7vfphm3hp81b2g3o9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoWYySEYdM6BzYe1gFIfIb0Cu9dgtnKuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843247583708-73rv1k70j2cgqkt7vfphm3hp81b2g3o9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
