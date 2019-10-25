@@ -4,25 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.proyecto.mipaciente.Doctor;
+import com.proyecto.mipaciente.modelos.Doctor;
 import com.proyecto.mipaciente.R;
 
 public class RegistroDoctor extends AppCompatActivity {
@@ -44,6 +36,7 @@ public class RegistroDoctor extends AppCompatActivity {
     private static final String TAG = "RegistroDoctor";
 
     FirebaseFirestore bd;
+    String nombree = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,45 +67,86 @@ public class RegistroDoctor extends AppCompatActivity {
                 String numeroDeCedulaS = numeroDeCedula.getText().toString();
                 String contrasenaS = contrasena.getText().toString();
                 CollectionReference dbDoctor = bd.collection("persona");
-
-                Doctor doctor = new Doctor(
-                        nombreS,
-                        apellidosS,
-                        emailS,
-                        especialidadS,
-                        contrasenaS,
-                        Integer.parseInt(telefonoS),
-                        Integer.parseInt(numeroDeCedulaS)
-                );
-                dbDoctor.add(doctor)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(RegistroDoctor.this, "Registro existoso",Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(RegistroDoctor.this, e.getMessage(),Toast.LENGTH_LONG).show();
-                            }
-                        });
+                if (validarDatos()){
+                    Doctor doctor = new Doctor(
+                            nombreS,
+                            apellidosS,
+                            emailS,
+                            especialidadS,
+                            contrasenaS,
+                            Integer.parseInt(telefonoS),
+                            Integer.parseInt(numeroDeCedulaS)
+                    );
+                    dbDoctor.add(doctor)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(RegistroDoctor.this, "Registro existoso",Toast.LENGTH_LONG).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(RegistroDoctor.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                                }
+                            });
+                }
             }
         });
 
         cancelarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Doctor finalDoc = new Doctor();
-                DocumentReference docRef = bd.collection("persona").document("gjFpsWKjEzdADHvUGHym");
-                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Doctor doctorClas = documentSnapshot.toObject(Doctor.class);
-                    }
-                });
-                Toast.makeText(RegistroDoctor.this,"Bienvenido: "+finalDoc.getNombre(),Toast.LENGTH_LONG).show();
+               nombre.setText("");
+               apellidos.setText("");
+               email.setText("");
+               telefono.setText("");
+               especialidad.setText("");
+               numeroDeCedula.setText("");
+               contrasena.setText("");
+               confirmarContrasena.setText("");
             }
         });
     }
+
+    private boolean validarDatos(){
+        if (nombre.getText().toString().isEmpty()
+            ||apellidos.getText().toString().isEmpty()
+            ||email.getText().toString().isEmpty()
+            ||telefono.getText().toString().isEmpty()
+            ||especialidad.getText().toString().isEmpty()
+            ||numeroDeCedula.getText().toString().isEmpty()
+            ||contrasena.getText().toString().isEmpty()
+            ||confirmarContrasena.getText().toString().isEmpty()){
+            Toast.makeText(RegistroDoctor.this,"Llene todos los campos",Toast.LENGTH_LONG).show();
+            return false;
+        }else if(confirmarContrasena.getText().toString().equals(contrasena.getText().toString())){
+            return true;
+        }else{
+            Toast.makeText(RegistroDoctor.this,"Las contraseñas no coinciden",Toast.LENGTH_LONG).show();
+            return false;
+        }
+    }
+
+    //Obtener datos de firestore
+
+    /*private void obtenerDatos(){
+        bd.collection("persona").whereEqualTo("nombre","Alfred")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                Log.d("Datos",document.getId() + " => "+ document.getData());
+                                Log.d("Datos",document.getId() + " => "+ document.getData().get("nombre"));
+                                String nombreess = (String)document.getString("nombre");
+                                nombre.setText(nombreess);
+                            }
+                        }else{
+                            Toast.makeText(RegistroDoctor.this, "Error al obtener los datos",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }*/
 }

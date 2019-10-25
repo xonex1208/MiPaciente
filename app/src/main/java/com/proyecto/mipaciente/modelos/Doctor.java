@@ -1,4 +1,4 @@
-package com.proyecto.mipaciente;
+package com.proyecto.mipaciente.modelos;
 
 public class Doctor {
     private String nombre;
