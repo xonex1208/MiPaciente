@@ -67,10 +67,6 @@ public class Login extends AppCompatActivity implements OnClickListener{
         btnRegistrar.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
-
-
-
-
     }
     @Override
     public void onClick(View view) {
@@ -153,7 +149,7 @@ public class Login extends AppCompatActivity implements OnClickListener{
         }
 
         if (TextUtils.isEmpty(contrasenaS)) {
-            Toast.makeText(this, "Falta ingresar la contrase�a", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Falta ingresar la contraseña", Toast.LENGTH_LONG).show();
             return;
         }
 

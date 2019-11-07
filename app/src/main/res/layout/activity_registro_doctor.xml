@@ -132,7 +132,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/fecha_nacimiento"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/roboto"
@@ -152,17 +152,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:columnCount="3"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
-            <Button
-                android:id="@+id/btn_cancelar_registro"
-                android:layout_width="match_parent"
-                android:layout_columnSpan="2"
-                android:padding="15dp"
-                android:background="@drawable/boton_secundario"
-                android:textSize="15sp"
-                android:textColor="@color/colorTextoSecundarioBoton"
-                android:fontFamily="@font/roboto"
-                android:text="@string/cancelar"></Button>
+
+                <Button
+                    android:id="@+id/btn_cancelar_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_columnSpan="2"
+                    android:background="@drawable/boton_secundario"
+                    android:fontFamily="@font/roboto"
+                    android:padding="15dp"
+                    android:text="@string/cancelar"
+                    android:textColor="@color/colorTextoSecundarioBoton"
+                    android:layout_marginRight="40dp"
+                    android:textSize="15sp"></Button>
 
 
             <Button
