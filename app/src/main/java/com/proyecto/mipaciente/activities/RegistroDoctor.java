@@ -74,7 +74,7 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
         bd = FirebaseFirestore.getInstance();
 
         obtenerDatosSpinner();
-        findViewById(R.id.fecha_nacimiento).setOnClickListener(new View.OnClickListener()
+        findViewById(R.id.fecha_nacimiento_paciente).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -96,7 +96,7 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
                 String especialidadS = especialidad.getText().toString();
                 String numeroDeCedulaS = numeroDeCedula.getText().toString();
                 String contrasenaS = contrasena.getText().toString();
-                CollectionReference dbDoctor = bd.collection("persona");
+                CollectionReference dbDoctor = bd.collection("doctor");
                 if (validarDatos())
                 {
                     //Guardar los datos en el modelo
@@ -168,10 +168,12 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
             {
                 if (validarLongitudDeContraseñas())
                 {
-                    if(sexoSeleccionado){
+                    if(sexoSeleccionado)
+                    {
                         if(fechaSeleccionada)
                         {
-                            if(!validarTelefono()){
+                            if(!validarTelefono())
+                            {
                                 Toast.makeText(
                                         RegistroDoctor.this,
                                         "El número del telefono debe tener 10 dígitos",

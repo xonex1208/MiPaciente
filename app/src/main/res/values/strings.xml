@@ -1,16 +1,31 @@
 <resources>
     <string name="app_name">MiPaciente</string>
-    <string name="registro_paciente">Registrate</string>
+    <string name="registro_doctor">Registrate</string>
     <string name="registrarse">Registrarse</string>
     <string name="cancelar">Cancelar</string>
     <string name="clinica">VitaDent</string>
     <string name="login">Login</string>
     <string name="entrar">Entrar</string>
-    <string name="registro_doctor">Registrate</string>
+    <string name="registrar_paciente">Registrar paciente</string>
 
     <string-array name="sexo">
         <item>Sexo</item>
         <item>Masculino</item>
         <item>Femenino</item>
     </string-array>
+
+    <string name="title_activity_inicio">Inicio</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_registro_paciente">Registrar Paciente</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 </resources>
