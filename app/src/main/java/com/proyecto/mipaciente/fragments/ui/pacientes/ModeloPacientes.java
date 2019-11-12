@@ -1,14 +1,14 @@
-package com.proyecto.mipaciente.fragments.ui.registropaciente;
+package com.proyecto.mipaciente.fragments.ui.pacientes;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ModeloRegistroPaciente extends ViewModel {
+public class ModeloPacientes extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ModeloRegistroPaciente() {
+    public ModeloPacientes() {
         //mText = new MutableLiveData<>();
         //mText.setValue("This is gallery fragment");
     }

@@ -1,12 +1,13 @@
 package com.proyecto.mipaciente.modelos;
 
-public class Doctor {
+public class Doctor
+{
     private String nombre;
     private String apellidos;
     private String email;
     private String especialidad;
     private String contrasena;
-    private int telefono;
+    private double telefono;
     private int numeroDeCedula;
     private String fechaNacimiento;
     private String sexo;
@@ -16,7 +17,7 @@ public class Doctor {
                   String email,
                   String especialidad,
                   String contrasena,
-                  int telefono,
+                  double telefono,
                   int numeroDeCedula,
                   String fechaNacimiento,
                   String sexo)
@@ -82,7 +83,7 @@ public class Doctor {
         this.contrasena = contrasena;
     }
 
-    public void setTelefono(int telefono)
+    public void setTelefono(double telefono)
     {
         this.telefono = telefono;
     }
@@ -117,7 +118,7 @@ public class Doctor {
         return contrasena;
     }
 
-    public int getTelefono()
+    public double getTelefono()
     {
         return telefono;
     }
@@ -126,4 +127,5 @@ public class Doctor {
     {
         return numeroDeCedula;
     }
+
 }

@@ -1,4 +1,4 @@
-package com.proyecto.mipaciente.fragments.ui.slideshow;
+package com.proyecto.mipaciente.fragments.ui.citas;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +14,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.proyecto.mipaciente.R;
 
-public class SlideshowFragment extends Fragment {
+public class Citas extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private ModeloCitas slideshowViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+                ViewModelProviders.of(this).get(ModeloCitas.class);
+        View root = inflater.inflate(R.layout.fragment_citas, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
         slideshowViewModel.getText().observe(this, new Observer<String>() {
             @Override

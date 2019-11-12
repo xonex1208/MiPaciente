@@ -1,14 +1,14 @@
-package com.proyecto.mipaciente.fragments.ui.slideshow;
+package com.proyecto.mipaciente.fragments.ui.citas;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class ModeloCitas extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public ModeloCitas() {
         mText = new MutableLiveData<>();
         mText.setValue("This is slideshow fragment");
     }

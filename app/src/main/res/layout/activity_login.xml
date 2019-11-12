@@ -46,26 +46,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="Usuario">
+                android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/registro_login_usuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="Contraseña">
+                android:hint="@string/contrasena">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/registro_login_contraseña"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -84,6 +84,7 @@
                     android:textSize="15sp"
                     android:textColor="@color/colorTextoSecundarioBoton"
                     android:fontFamily="@font/roboto"
+                    android:layout_marginRight="40dp"
                     android:text="@string/entrar"></Button>
 
 

@@ -155,7 +155,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/fecha_nacimiento_paciente"
+                android:id="@+id/registro_fecha_nacimiento_paciente"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/roboto"

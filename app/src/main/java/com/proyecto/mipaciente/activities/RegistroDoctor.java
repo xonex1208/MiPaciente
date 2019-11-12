@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,10 +19,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.proyecto.mipaciente.modelos.Doctor;
 import com.proyecto.mipaciente.R;
@@ -41,6 +47,8 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
     private EditText confirmarContrasena;
     private DatePickerDialog.OnDateSetListener fechaNacimiento;
     private TextView fechaNacimientoTextView;
+    private ProgressDialog progressDialog;
+    private FirebaseAuth autentificarUsuario;
     private String fecha;
     private String sexo;
     private int anioI;
@@ -50,6 +58,7 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
     private boolean fechaSeleccionada=false;
     FirebaseFirestore bd;
     String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,66 +78,32 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
         confirmarContrasena = findViewById(R.id.registro_confirmar_contrasena);
         guardarBtn = findViewById(R.id.btn_guardar_registro);
         cancelarBtn = findViewById(R.id.btn_cancelar_registro);
-        fechaNacimientoTextView= findViewById(R.id.fecha_nacimiento);
+        fechaNacimientoTextView= findViewById(R.id.registro_fecha_nacimiento);
+        progressDialog = new ProgressDialog(this);
+        autentificarUsuario = FirebaseAuth.getInstance();
         //Inicializacion de la base de datos
         bd = FirebaseFirestore.getInstance();
 
         obtenerDatosSpinner();
-        findViewById(R.id.fecha_nacimiento_paciente).setOnClickListener(new View.OnClickListener()
-        {
+        fechaNacimientoTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 mostrarFecha();
             }
         });
         ponerFecha();
-
+        //Guardar datos del usuario
         guardarBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                String nombreS = nombre.getText().toString();
-                String apellidosS = apellidos.getText().toString();
-                String emailS = email.getText().toString();
-                String telefonoS = telefono.getText().toString();
-                String especialidadS = especialidad.getText().toString();
-                String numeroDeCedulaS = numeroDeCedula.getText().toString();
-                String contrasenaS = contrasena.getText().toString();
-                CollectionReference dbDoctor = bd.collection("doctor");
                 if (validarDatos())
                 {
-                    //Guardar los datos en el modelo
-                    Doctor doctor = new Doctor(
-                            nombreS,
-                            apellidosS,
-                            emailS,
-                            especialidadS,
-                            contrasenaS,
-                            Integer.parseInt(telefonoS),
-                            Integer.parseInt(numeroDeCedulaS),
-                            fecha,
-                            sexo
-                    );
-                    dbDoctor.add(doctor)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
-                            {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference)
-                                {
-                                    Toast.makeText(RegistroDoctor.this, "Registro existoso",Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener()
-                            {
-                                @Override
-                                public void onFailure(@NonNull Exception e)
-                                {
-                                    Toast.makeText(RegistroDoctor.this, e.getMessage(),Toast.LENGTH_LONG).show();
-                                }
-                            });
+                    //Registrar usuario con Authentication en Firebase
+                    registrarUsuario();
                 }
+
             }
         });
 
@@ -137,16 +112,97 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onClick(View view)
             {
-               nombre.setText("");
-               apellidos.setText("");
-               email.setText("");
-               telefono.setText("");
-               especialidad.setText("");
-               numeroDeCedula.setText("");
-               contrasena.setText("");
-               confirmarContrasena.setText("");
+                limpiarCampos();
+                Intent intent = new Intent(RegistroDoctor.this,Login.class);
+                startActivity(intent);
+                finish();
             }
         });
+    }
+
+    private void limpiarCampos()
+    {
+        nombre.setText("");
+        apellidos.setText("");
+        email.setText("");
+        telefono.setText("");
+        especialidad.setText("");
+        numeroDeCedula.setText("");
+        contrasena.setText("");
+        confirmarContrasena.setText("");
+        fechaNacimientoTextView.setText("Fecha de nacimiento");
+
+    }
+
+    private void registrarUsuarioFirestore(FirebaseAuth autentificarUsuario){
+        String emailS = email.getText().toString();
+        String nombreS = nombre.getText().toString();
+        String apellidosS = apellidos.getText().toString();
+        String telefonoS = telefono.getText().toString();
+        String especialidadS = especialidad.getText().toString();
+        String numeroDeCedulaS = numeroDeCedula.getText().toString();
+        String contrasenaS = contrasena.getText().toString();
+        //CollectionReference dbDoctor = bd.collection("doctores");
+        //Guardar los datos en el modelo
+
+        Doctor doctor = new Doctor(
+                nombreS,
+                apellidosS,
+                emailS,
+                especialidadS,
+                contrasenaS,
+                Double.parseDouble(telefonoS),
+                Integer.parseInt(numeroDeCedulaS),
+                fecha,
+                sexo
+        );
+        bd.collection("doctor").document(autentificarUsuario.getUid()).set(doctor).
+                addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(RegistroDoctor.this, "Registro existoso",Toast.LENGTH_LONG).show();
+                limpiarCampos();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(RegistroDoctor.this, e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void registrarUsuario()
+    {
+        //registramos un nuevo usuario
+        progressDialog.setMessage("Cargando...");
+        progressDialog.show();
+        autentificarUsuario.createUserWithEmailAndPassword(email.getText().toString(), contrasena.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //Verificar si se pudo registrar
+                        if(!task.isSuccessful()) {
+                            try {
+                                throw task.getException();
+                            }
+                            catch(FirebaseAuthUserCollisionException e)
+                            {
+                                Toast.makeText(
+                                        RegistroDoctor.this,
+                                        "El email ya existe, intenta con otro",
+                                        Toast.LENGTH_LONG).show();
+                            } catch(Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        else
+                        {
+                            registrarUsuarioFirestore(autentificarUsuario);
+                        }
+                        progressDialog.dismiss();
+                    }
+                });
     }
 
     private boolean validarDatos()
@@ -182,7 +238,8 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
                             }
                             else
                             {
-                                if(!validarCedula()){
+                                if(!validarCedula())
+                                {
                                     Toast.makeText(
                                             RegistroDoctor.this,
                                             "El número de cédula debe tener 8 dígitos",
@@ -269,6 +326,7 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
                 anioI,mesI,diaI);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+
     }
 
     private void ponerFecha()

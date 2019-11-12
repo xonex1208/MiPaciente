@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.proyecto.mipaciente.fragments.Inicio;
 import com.proyecto.mipaciente.modelos.Loginn;
 import com.proyecto.mipaciente.R;
 
@@ -28,24 +29,19 @@ import com.proyecto.mipaciente.R;
 
 public class Login extends AppCompatActivity implements OnClickListener{
 
-    private EditText usuario;
+    private EditText email;
     private  EditText contrasena;
 
     private Button btnRegistrar;
     private Button btnLogin;
 
-    private Loginn loginClas;
+    String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     private static final String TAG = "Login";
 
     FirebaseFirestore bd;
-
     //Variable para agregar usuarios y contraseña
-
     private FirebaseAuth mAuth;
-
-    private FirebaseApp firebaseApp;
-
     private ProgressDialog progressDialog;
 
 
@@ -54,7 +50,7 @@ public class Login extends AppCompatActivity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usuario =  findViewById(R.id.registro_login_usuario);
+        email =  findViewById(R.id.registro_login_usuario);
         contrasena = findViewById(R.id.registro_login_contraseña);
 
         btnRegistrar =  findViewById(R.id.btn_login_registro);
@@ -83,78 +79,39 @@ public class Login extends AppCompatActivity implements OnClickListener{
 
     }
 
-
-
-    ////////
     private void registrarUsuario() {
-
-
-        //Obtenemos el email y la contrase�a desde las cajas de texto
-        String usuarioS = usuario.getText().toString().trim();
-        String contrasenaS = contrasena.getText().toString().trim();
-
-        //Verificamos que las cajas de texto no esten vac�as
-        if (TextUtils.isEmpty(usuarioS)) {//(precio.equals(""))
-            Toast.makeText(this, "Se debe ingresar un usuario", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(contrasenaS)) {
-            Toast.makeText(this, "Falta ingresar la contrase�a", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-
-        progressDialog.setMessage("Realizando registro...");
-        progressDialog.show();
-
-        //registramos un nuevo usuario
-
-        mAuth.createUserWithEmailAndPassword(usuarioS, contrasenaS)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //checking if success
-                        if (task.isSuccessful()) {
-
-                            Toast.makeText(Login.this, "Se ha registrado el usuario con el correo: " + usuario.getText(), Toast.LENGTH_LONG).show();
-                        } else {
-
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-
-//                                if (task.getException() instanceof FirebaseFirestoreUserCollisionException) {//si se presenta una colisi�n
-//                                    Toast.makeText(Login.this, "Ese usuario no existe ", Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    Toast.makeText(Login.this, "No se pudo registrar el usuario ", Toast.LENGTH_LONG).show();
-//                                }
-                        }
-                        progressDialog.dismiss();
-                    }
-                });
-
+        Intent intent = new Intent(Login.this,RegistroDoctor.class);
+        startActivity(intent);
     }
 
     private void loguearUsuario() {
-        //Obtenemos el email y la contrase�a desde las cajas de texto
-        final String usuarioS = usuario.getText().toString().trim();
+        //Obtenemos el email y la contraseña
+        final String usuarioS = email.getText().toString().trim();
         String contrasenaS = contrasena.getText().toString().trim();
-
-        //Verificamos que las cajas de texto no esten vac�as
-        if (TextUtils.isEmpty(usuarioS)) {//(precio.equals(""))
-            Toast.makeText(this, "Se debe ingresar un usuario", Toast.LENGTH_LONG).show();
+        //Verificamos que el formato de email sea correcto
+        if (validarEmail())
+        {
+            if (TextUtils.isEmpty(usuarioS))
+            {
+                Toast.makeText(this, "Se debe ingresar un e-mail", Toast.LENGTH_LONG).show();
+                return;
+            }
+            else if (TextUtils.isEmpty(contrasenaS))
+            {
+                Toast.makeText(this, "Falta ingresar la contraseña", Toast.LENGTH_LONG).show();
+                return;
+            }
+        }else
+        {
+            Toast.makeText(
+                    this,
+                    "Escriba una dirección de correo correcta",
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (TextUtils.isEmpty(contrasenaS)) {
-            Toast.makeText(this, "Falta ingresar la contraseña", Toast.LENGTH_LONG).show();
-            return;
-        }
 
-
-        progressDialog.setMessage("Realizando consulta...");
+        progressDialog.setMessage("Iniciando sesión...");
         progressDialog.show();
 
         //loguear usuario
@@ -165,12 +122,14 @@ public class Login extends AppCompatActivity implements OnClickListener{
                         if (task.isSuccessful()) {
                             int pos = usuarioS.indexOf("@");
                             String user = usuarioS.substring(0, pos);
-                            Toast.makeText(Login.this, "Bienvenido: " + usuario.getText(), Toast.LENGTH_LONG).show();
-                            Intent intencion = new Intent(getApplication(),RegistroDoctor.class);
-                            intencion.putExtra("usuario", user);
+                            Toast.makeText(
+                                    Login.this,
+                                    "Bienvenido: " + email.getText(),
+                                    Toast.LENGTH_LONG).show();
+                            Intent intencion = new Intent(getApplication(), Inicio.class);
+                            intencion.putExtra("doctorID", mAuth.getUid());
                             startActivity(intencion);
-
-
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -183,7 +142,11 @@ public class Login extends AppCompatActivity implements OnClickListener{
                     }
                 });
 
+    }
 
+    private boolean validarEmail()
+    {
+        return email.getText().toString().matches(emailPatron);
     }
 
 

@@ -3,9 +3,11 @@
     <string name="registro_doctor">Registrate</string>
     <string name="registrarse">Registrarse</string>
     <string name="cancelar">Cancelar</string>
-    <string name="clinica">VitaDent</string>
-    <string name="login">Login</string>
+    <string name="clinica">MiPaciente</string>
+    <string name="login">Iniciar sesión</string>
     <string name="entrar">Entrar</string>
+    <string name="email">E-mail</string>
+    <string name="contrasena">Contraseña</string>
     <string name="registrar_paciente">Registrar paciente</string>
 
     <string-array name="sexo">
@@ -20,11 +22,11 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_log_out">Cerrar sesión</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_registro_paciente">Registrar Paciente</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_pacientes">Pacientes</string>
+    <string name="menu_citas">Citas</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>

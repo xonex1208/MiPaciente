@@ -1,10 +1,9 @@
-package com.proyecto.mipaciente.fragments.ui.registropaciente;
+package com.proyecto.mipaciente.fragments.ui.pacientes;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,12 +31,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.proyecto.mipaciente.R;
 import com.proyecto.mipaciente.activities.RegistroDoctor;
-import com.proyecto.mipaciente.modelos.Doctor;
 import com.proyecto.mipaciente.modelos.Paciente;
 
 import java.util.Calendar;
 
-public class RegistroPaciente extends Fragment implements AdapterView.OnItemSelectedListener
+public class Pacientes extends Fragment implements AdapterView.OnItemSelectedListener
 {
 
     //Variables globales
@@ -66,14 +63,14 @@ public class RegistroPaciente extends Fragment implements AdapterView.OnItemSele
 
     FirebaseFirestore bd;
     String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    private ModeloRegistroPaciente galleryViewModel;
+    private ModeloPacientes galleryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
         galleryViewModel =
-                ViewModelProviders.of(this).get(ModeloRegistroPaciente.class);
-        View root = inflater.inflate(R.layout.fragment_registro_paciente, container, false);
+                ViewModelProviders.of(this).get(ModeloPacientes.class);
+        View root = inflater.inflate(R.layout.fragment_pacientes, container, false);
         Button guardarBtn;
         Button cancelarBtn;
 
@@ -89,17 +86,15 @@ public class RegistroPaciente extends Fragment implements AdapterView.OnItemSele
         ocupacion = root.findViewById(R.id.registro_ocupacion_paciente);
         guardarBtn = root.findViewById(R.id.btn_guardar_registro_paciente);
         cancelarBtn = root.findViewById(R.id.btn_cancelar_registro_paciente);
-        fechaNacimientoTextView= root.findViewById(R.id.fecha_nacimiento_paciente);
+        fechaNacimientoTextView= root.findViewById(R.id.registro_fecha_nacimiento_paciente);
         //Inicializacion de la base de datos
         bd = FirebaseFirestore.getInstance();
 
         obtenerDatosSpinner(root);
 
-        root.findViewById(R.id.fecha_nacimiento_paciente).setOnClickListener(new View.OnClickListener()
-        {
+        fechaNacimientoTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 mostrarFecha();
             }
         });

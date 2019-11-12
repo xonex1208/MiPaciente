@@ -15,15 +15,17 @@
             android:name=".fragments.Inicio"
             android:label="@string/title_activity_inicio"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".activities.RegistroUsuarios" />
+        <activity android:name=".activities.RegistroDoctor">
+        </activity>
+        <activity android:name=".activities.Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RegistroUsuarios" />
-        <activity android:name=".activities.RegistroDoctor"></activity>
-        <activity android:name=".activities.Login" />
         <activity android:name=".activities.Citas" />
     </application>
 
