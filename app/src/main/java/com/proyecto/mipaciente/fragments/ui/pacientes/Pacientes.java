@@ -110,9 +110,11 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
 
         obtenerDatosSpinner(root);
 
-        fechaNacimientoTextView.setOnClickListener(new View.OnClickListener() {
+        fechaNacimientoTextView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 mostrarFecha();
             }
         });
@@ -132,7 +134,8 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
 
         cancelarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
 
             }
         });
@@ -251,11 +254,14 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
         progressDialog.show();
         bd.collection("paciente").whereEqualTo("telefono",telefono.getText().toString())
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+                {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots)
+                    {
                         boolean isExisting = false;
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots){
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots)
+                        {
                             Log.d("Datos",document.getId() + " => "+ document.getData());
                             Log.d("Datos",document.getId() + " => "+ document.getData().get("telefono"));
                             String tel = document.getString("telefono");
@@ -272,7 +278,8 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
                                     getContext(),
                                     "El número de telefono ya esta asociado a otro paciente",
                                     Toast.LENGTH_LONG).show();
-                        }else
+                        }
+                        else
                         {
                             registrarPaciente();
                         }
