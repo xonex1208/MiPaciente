@@ -1,9 +1,12 @@
 package com.proyecto.mipaciente.fragments.ui.pacientes;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.proyecto.mipaciente.R;
 import com.proyecto.mipaciente.activities.RegistroDoctor;
+import com.proyecto.mipaciente.fragments.Inicio;
 import com.proyecto.mipaciente.modelos.Paciente;
 
 import java.util.Calendar;
@@ -59,7 +64,7 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
     private int diaI;
     private boolean sexoSeleccionado=false;
     private boolean fechaSeleccionada=false;
-    private boolean correoExistenteB=false;
+    private ProgressDialog progressDialog;
 
     FirebaseFirestore bd;
     String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -74,6 +79,7 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
         Button guardarBtn;
         Button cancelarBtn;
 
+        progressDialog = new ProgressDialog(getContext());
         nombre = root.findViewById(R.id.registro_nombre_paciente);
         apellidos = root.findViewById(R.id.registro_apellidos_paciente);
         email = root.findViewById(R.id.registro_correo_paciente);
@@ -87,6 +93,18 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
         guardarBtn = root.findViewById(R.id.btn_guardar_registro_paciente);
         cancelarBtn = root.findViewById(R.id.btn_cancelar_registro_paciente);
         fechaNacimientoTextView= root.findViewById(R.id.registro_fecha_nacimiento_paciente);
+        //FloatingActionButton fab = root.findViewById(R.id.fab);
+/*        fab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                *//*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*//*
+                Intent intencion = new Intent(getContext(), Pacientes.class);
+                startActivity(intencion);
+            }
+        });*/
         //Inicializacion de la base de datos
         bd = FirebaseFirestore.getInstance();
 
@@ -103,57 +121,11 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
             @Override
             public void onClick(View view) {
                 //Guardar datos
-                String nombreS = nombre.getText().toString();
-                String apellidosS = apellidos.getText().toString();
-                String emailS = email.getText().toString();
-                String telefonoS = telefono.getText().toString();
-                String edadS = edad.getText().toString();
-                String direccionS = direccion.getText().toString();
-                String estadoCivilS = estadoCivil.getText().toString();
-                String parentescoS = parentesco.getText().toString();
-                String ocupacionS = ocupacion.getText().toString();
-                String redSocialS = estadoCivil.getText().toString();
-                CollectionReference dbPaciente = bd.collection("paciente");
                 if (validarDatos())
                 {
+                    //Verificar si el email existe
                     obtenerEmail();
-                    //Guardar los datos en el modelo
-                    if (!correoExistenteB){
-                        Paciente paciente = new Paciente(
-                                nombreS,
-                                apellidosS,
-                                emailS,
-                                Integer.parseInt(telefonoS),
-                                fecha,
-                                Integer.parseInt(edadS),
-                                sexo,
-                                direccionS,
-                                estadoCivilS,
-                                parentescoS,
-                                ocupacionS,
-                                redSocialS
-                        );
-                        dbPaciente.add(paciente)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
-                                {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference)
-                                    {
-                                        Toast.makeText(getContext(), "Registro existoso",Toast.LENGTH_LONG).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener()
-                                {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e)
-                                    {
-                                        Toast.makeText(getContext(), e.getMessage(),Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                    }else {
-                        Toast.makeText(getContext(), "Registro no exitoso",Toast.LENGTH_LONG).show();
-                    }
-
+                    //registrarPaciente();
                 }
             }
         });
@@ -226,43 +198,85 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
                 return false;
             }
     }
-    private boolean validarExistenciaEmail()
+    private void registrarPaciente()
     {
-        return true;
+        String nombreS = nombre.getText().toString();
+        String apellidosS = apellidos.getText().toString();
+        String emailS = email.getText().toString();
+        String telefonoS = telefono.getText().toString();
+        String edadS = edad.getText().toString();
+        String direccionS = direccion.getText().toString();
+        String estadoCivilS = estadoCivil.getText().toString();
+        String parentescoS = parentesco.getText().toString();
+        String ocupacionS = ocupacion.getText().toString();
+        String redSocialS = estadoCivil.getText().toString();
+        CollectionReference dbPaciente = bd.collection("paciente");
+
+        Paciente paciente = new Paciente(
+                nombreS,
+                apellidosS,
+                emailS,
+                telefonoS,
+                fecha,
+                Integer.parseInt(edadS),
+                sexo,
+                direccionS,
+                estadoCivilS,
+                parentescoS,
+                ocupacionS,
+                redSocialS,
+                "EmaiDoc"
+        );
+        dbPaciente.add(paciente)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference)
+                    {
+                        Toast.makeText(getContext(), "Registro existoso",Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        Toast.makeText(getContext(), e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
     }
     private void obtenerEmail()
     {
-        bd.collection("paciente").whereEqualTo("email",email.getText().toString())
+        progressDialog.setMessage("Cargando...");
+        progressDialog.show();
+        bd.collection("paciente").whereEqualTo("telefono",telefono.getText().toString())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful())
-                        {
-                            boolean existe = false;
-                            for (QueryDocumentSnapshot document : task.getResult()){
-                                /*Log.d("Datos",document.getId() + " => "+ document.getData());
-                                Log.d("Datos",document.getId() + " => "+ document.getData().get("email"));
-                                correoExiste = document.getString("email");*/
-                                String correoExistente = document.getString("email");
-                                if (correoExiste.equals(email.getText().toString()))
-                                {
-                                    existe=true;
-                                }
-                                if (existe){
-                                    Toast.makeText(
-                                            getContext(),
-                                            "El correo ya ha sido registrado, intente con otro",
-                                            Toast.LENGTH_LONG).show();
-                                    correoExistenteB=true;
-                                }
-                                System.out.println("OBtener datos");
-
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        boolean isExisting = false;
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots){
+                            Log.d("Datos",document.getId() + " => "+ document.getData());
+                            Log.d("Datos",document.getId() + " => "+ document.getData().get("telefono"));
+                            String tel = document.getString("telefono");
+                            nombre.setText(""+tel);
+                            System.out.println("Obtener datos");
+                            System.out.println("Telefono: "+tel);
+                            if (tel.equals(telefono.getText().toString()))
+                            {
+                                isExisting = true;
                             }
+                        }
+                        if (isExisting){
+                            Toast.makeText(
+                                    getContext(),
+                                    "El número de telefono ya esta asociado a otro paciente",
+                                    Toast.LENGTH_LONG).show();
                         }else
                         {
-                            Toast.makeText(getContext(), "Error al obtener los datos",Toast.LENGTH_LONG).show();
+                            registrarPaciente();
                         }
+                        progressDialog.dismiss();
                     }
         });
         System.out.println("Returning");

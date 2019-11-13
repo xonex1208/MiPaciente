@@ -127,7 +127,7 @@ public class Login extends AppCompatActivity implements OnClickListener{
                                     "Bienvenido: " + email.getText(),
                                     Toast.LENGTH_LONG).show();
                             Intent intencion = new Intent(getApplication(), Inicio.class);
-                            intencion.putExtra("doctorID", mAuth.getUid());
+                            intencion.putExtra("correo", email.getText().toString());
                             startActivity(intencion);
                             finish();
                         } else {

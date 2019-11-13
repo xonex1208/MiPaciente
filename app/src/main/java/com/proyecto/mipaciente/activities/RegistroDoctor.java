@@ -48,7 +48,6 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
     private DatePickerDialog.OnDateSetListener fechaNacimiento;
     private TextView fechaNacimientoTextView;
     private ProgressDialog progressDialog;
-    private FirebaseAuth autentificarUsuario;
     private String fecha;
     private String sexo;
     private int anioI;
@@ -56,6 +55,7 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
     private int diaI;
     private boolean sexoSeleccionado=false;
     private boolean fechaSeleccionada=false;
+    private FirebaseAuth autentificarUsuario;
     FirebaseFirestore bd;
     String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 

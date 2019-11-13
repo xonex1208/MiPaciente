@@ -4,7 +4,7 @@ public class Paciente {
     private String nombre;
     private String apellidos;
     private String email;
-    private int telefono;
+    private String telefono;
     private String fechaNacimiento;
     private int edad;
     private String sexo;
@@ -13,11 +13,12 @@ public class Paciente {
     private String parentesco;
     private String ocupacion;
     private String redSocial;
+    private String emailDoctor;
 
     public Paciente(String nombre,
                     String apellidos,
                     String email,
-                    int telefono,
+                    String telefono,
                     String fechaNacimiento,
                     int edad,
                     String sexo,
@@ -25,7 +26,8 @@ public class Paciente {
                     String estadoCivil,
                     String parentesco,
                     String ocupacion,
-                    String redSocial) {
+                    String redSocial,
+                    String emailDoctor) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -38,6 +40,7 @@ public class Paciente {
         this.parentesco = parentesco;
         this.ocupacion = ocupacion;
         this.redSocial = redSocial;
+        this.emailDoctor = emailDoctor;
     }
 
     public Paciente()
@@ -45,11 +48,13 @@ public class Paciente {
 
     }
 
-    public String getNombre() {
+    public String getNombre()
+    {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre)
+    {
         this.nombre = nombre;
     }
 
@@ -69,11 +74,11 @@ public class Paciente {
         this.email = email;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -141,5 +146,11 @@ public class Paciente {
         this.redSocial = redSocial;
     }
 
+    public String getEmailDoctor() {
+        return emailDoctor;
+    }
 
+    public void setEmailDoctor(String emailDoctor) {
+        this.emailDoctor = emailDoctor;
+    }
 }

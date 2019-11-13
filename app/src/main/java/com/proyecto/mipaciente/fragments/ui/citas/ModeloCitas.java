@@ -10,7 +10,6 @@ public class ModeloCitas extends ViewModel {
 
     public ModeloCitas() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
     }
 
     public LiveData<String> getText() {
