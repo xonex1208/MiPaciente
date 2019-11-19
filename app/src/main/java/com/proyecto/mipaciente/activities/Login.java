@@ -1,9 +1,12 @@
 package com.proyecto.mipaciente.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,11 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.proyecto.mipaciente.fragments.Inicio;
@@ -31,9 +37,6 @@ public class Login extends AppCompatActivity implements OnClickListener{
 
     private EditText email;
     private  EditText contrasena;
-
-    private Button btnRegistrar;
-    private Button btnLogin;
 
     String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -53,8 +56,8 @@ public class Login extends AppCompatActivity implements OnClickListener{
         email =  findViewById(R.id.registro_login_usuario);
         contrasena = findViewById(R.id.registro_login_contraseña);
 
-        btnRegistrar =  findViewById(R.id.btn_login_registro);
-        btnLogin =  findViewById(R.id.btn_login_entrar);
+        Button btnRegistrar = findViewById(R.id.btn_login_registro);
+        Button btnLogin = findViewById(R.id.btn_login_entrar);
 
         progressDialog = new ProgressDialog(this);
         bd = FirebaseFirestore.getInstance();
@@ -67,9 +70,7 @@ public class Login extends AppCompatActivity implements OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.btn_login_registro:
-                //Invocamos al m�t
                 registrarUsuario();
                 break;
             case R.id.btn_login_entrar:
@@ -127,13 +128,12 @@ public class Login extends AppCompatActivity implements OnClickListener{
                                     "Bienvenido: " + email.getText(),
                                     Toast.LENGTH_LONG).show();
                             Intent intencion = new Intent(getApplication(), Inicio.class);
-                            intencion.putExtra("correo", email.getText().toString());
                             startActivity(intencion);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                            Toast.makeText(getApplicationContext(), "Verifica tu correo o contraseña",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
 
@@ -142,6 +142,17 @@ public class Login extends AppCompatActivity implements OnClickListener{
                     }
                 });
 
+    }
+
+    @Override
+    protected void onStart() {
+        //Verificar sesion activa
+        super.onStart();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            startActivity(new Intent(this, Inicio.class));
+            finish();
+        }
     }
 
     private boolean validarEmail()

@@ -3,6 +3,9 @@
     <color name="colorPrimary">#0288d1</color>
     <color name="colorPrimaryDark">#5eb8ff</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="negro">#000</color>
+    <color name="gris">#DE000000</color>
+    <color name="blanco">#fff</color>
     <color name="colorTextoPrimarioBoton">#000</color>
     <color name="colorTextoSecundarioBoton">#fff</color>
     <color name="colorPrimarioBotonSecundario">#D50000</color>

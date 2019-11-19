@@ -56,8 +56,8 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
     private boolean sexoSeleccionado=false;
     private boolean fechaSeleccionada=false;
     private FirebaseAuth autentificarUsuario;
-    FirebaseFirestore bd;
-    String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private FirebaseFirestore bd;
+    private String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
     @Override

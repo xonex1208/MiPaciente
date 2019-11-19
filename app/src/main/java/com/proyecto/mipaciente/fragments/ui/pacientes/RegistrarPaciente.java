@@ -2,7 +2,6 @@ package com.proyecto.mipaciente.fragments.ui.pacientes;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,24 +22,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.proyecto.mipaciente.R;
-import com.proyecto.mipaciente.activities.RegistroDoctor;
-import com.proyecto.mipaciente.fragments.Inicio;
 import com.proyecto.mipaciente.modelos.Paciente;
 
 import java.util.Calendar;
 
-public class Pacientes extends Fragment implements AdapterView.OnItemSelectedListener
+public class RegistrarPaciente extends Fragment implements AdapterView.OnItemSelectedListener
 {
 
     //Variables globales
@@ -75,7 +69,7 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
     {
         galleryViewModel =
                 ViewModelProviders.of(this).get(ModeloPacientes.class);
-        View root = inflater.inflate(R.layout.fragment_pacientes, container, false);
+        View root = inflater.inflate(R.layout.fragment_registrar_paciente, container, false);
         Button guardarBtn;
         Button cancelarBtn;
 
@@ -101,7 +95,7 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
             {
                 *//*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*//*
-                Intent intencion = new Intent(getContext(), Pacientes.class);
+                Intent intencion = new Intent(getContext(), ListarPacientesModelo.class);
                 startActivity(intencion);
             }
         });*/
@@ -228,7 +222,8 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
                 parentescoS,
                 ocupacionS,
                 redSocialS,
-                "EmaiDoc"
+                "email",
+                "foto"
         );
         dbPaciente.add(paciente)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
@@ -265,7 +260,6 @@ public class Pacientes extends Fragment implements AdapterView.OnItemSelectedLis
                             Log.d("Datos",document.getId() + " => "+ document.getData());
                             Log.d("Datos",document.getId() + " => "+ document.getData().get("telefono"));
                             String tel = document.getString("telefono");
-                            nombre.setText(""+tel);
                             System.out.println("Obtener datos");
                             System.out.println("Telefono: "+tel);
                             if (tel.equals(telefono.getText().toString()))
