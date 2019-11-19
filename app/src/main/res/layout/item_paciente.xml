@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/imagen_paciente_item"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#757575"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar_paciente" />
+
+        <TextView
+            android:id="@+id/nombre_paciente_item"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/negro"
+            android:layout_alignTop="@+id/imagen_paciente_item"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="-2dp"
+            android:layout_toStartOf="@+id/edad_paciente_item"
+            android:layout_toEndOf="@+id/imagen_paciente_item"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Nombre Paciente" />
+
+        <TextView
+            android:id="@+id/telefono_paciente_item"
+            style="@style/Fuente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/nombre_paciente_item"
+            android:layout_below="@+id/nombre_paciente_item"
+            android:textColor="@color/gris"
+            tools:text="Telefono" />
+
+        <TextView
+            android:id="@+id/edad_paciente_item"
+            style="@style/Fuente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/gris"
+            tools:text="Edad" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

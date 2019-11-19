@@ -49,7 +49,8 @@ public class Login extends AppCompatActivity implements OnClickListener{
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -68,7 +69,8 @@ public class Login extends AppCompatActivity implements OnClickListener{
 
     }
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         switch (view.getId()) {
             case R.id.btn_login_registro:
                 registrarUsuario();
@@ -80,7 +82,8 @@ public class Login extends AppCompatActivity implements OnClickListener{
 
     }
 
-    private void registrarUsuario() {
+    private void registrarUsuario()
+    {
         Intent intent = new Intent(Login.this,RegistroDoctor.class);
         startActivity(intent);
     }

@@ -14,7 +14,6 @@ public class Paciente {
     private String ocupacion;
     private String redSocial;
     private String emailDoctor;
-    private String foto;
 
     public Paciente(String nombre,
                     String apellidos,
@@ -28,8 +27,7 @@ public class Paciente {
                     String parentesco,
                     String ocupacion,
                     String redSocial,
-                    String emailDoctor,
-                    String foto) {
+                    String emailDoctor) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -43,7 +41,6 @@ public class Paciente {
         this.ocupacion = ocupacion;
         this.redSocial = redSocial;
         this.emailDoctor = emailDoctor;
-        this.foto = foto;
     }
 
     public Paciente()
@@ -149,19 +146,4 @@ public class Paciente {
         this.redSocial = redSocial;
     }
 
-    public String getEmailDoctor() {
-        return emailDoctor;
-    }
-
-    public void setEmailDoctor(String emailDoctor) {
-        this.emailDoctor = emailDoctor;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
 }

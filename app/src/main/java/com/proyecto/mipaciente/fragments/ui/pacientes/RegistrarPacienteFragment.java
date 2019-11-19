@@ -2,6 +2,7 @@ package com.proyecto.mipaciente.fragments.ui.pacientes;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ import com.proyecto.mipaciente.modelos.Paciente;
 
 import java.util.Calendar;
 
-public class RegistrarPaciente extends Fragment implements AdapterView.OnItemSelectedListener
+public class RegistrarPacienteFragment extends Fragment implements AdapterView.OnItemSelectedListener
 {
 
     //Variables globales
@@ -222,8 +223,7 @@ public class RegistrarPaciente extends Fragment implements AdapterView.OnItemSel
                 parentescoS,
                 ocupacionS,
                 redSocialS,
-                "email",
-                "foto"
+                "email"
         );
         dbPaciente.add(paciente)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
