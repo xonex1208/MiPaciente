@@ -13,7 +13,7 @@ public class Paciente {
     private String parentesco;
     private String ocupacion;
     private String redSocial;
-    private String emailDoctor;
+    private String imagenPaciente;
 
     public Paciente(String nombre,
                     String apellidos,
@@ -27,7 +27,7 @@ public class Paciente {
                     String parentesco,
                     String ocupacion,
                     String redSocial,
-                    String emailDoctor) {
+                    String imagenPaciente) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -40,7 +40,7 @@ public class Paciente {
         this.parentesco = parentesco;
         this.ocupacion = ocupacion;
         this.redSocial = redSocial;
-        this.emailDoctor = emailDoctor;
+        this.imagenPaciente = imagenPaciente;
     }
 
     public Paciente()
@@ -146,4 +146,13 @@ public class Paciente {
         this.redSocial = redSocial;
     }
 
+    public String getImagenPaciente()
+    {
+        return imagenPaciente;
+    }
+
+    public void setImagenPaciente(String imagenPaciente)
+    {
+        this.imagenPaciente = imagenPaciente;
+    }
 }

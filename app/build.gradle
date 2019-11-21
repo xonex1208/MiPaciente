@@ -39,6 +39,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.firebase:firebase-firestore:21.3.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    //FirebaseStorage
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
     // FirebaseUI for Firebase Realtime Database
     implementation 'com.firebaseui:firebase-ui-database:6.1.0'
     // FirebaseUI for Cloud Firestore

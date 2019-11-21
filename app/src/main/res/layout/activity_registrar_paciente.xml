@@ -22,8 +22,17 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20sp"
                 android:textSize="25sp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/roboto"
                 android:text="@string/registrar_paciente" />
+
+            <ImageView
+                android:id="@+id/registro_imagen_paciente"
+                android:layout_width="150dp"
+                android:layout_gravity="center"
+                android:layout_height="150dp"
+                android:layout_marginBottom="25dp"
+                app:srcCompat="@drawable/avatar_paciente" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

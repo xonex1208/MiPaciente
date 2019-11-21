@@ -14,15 +14,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.proyecto.mipaciente.R;
 import com.proyecto.mipaciente.modelos.Paciente;
 
-public class PacienteAdaptador extends FirestoreRecyclerAdapter<Paciente,PacienteAdaptador.PacienteHolder> {
+public class PacienteAdaptador extends FirestoreRecyclerAdapter<Paciente,PacienteAdaptador.PacienteHolder>
+{
     private OnItemClickListener listener;
 
-    public PacienteAdaptador(@NonNull FirestoreRecyclerOptions<Paciente> options) {
+    public PacienteAdaptador(@NonNull FirestoreRecyclerOptions<Paciente> options)
+    {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull PacienteHolder holder, int position, @NonNull Paciente model) {
+    protected void onBindViewHolder(@NonNull PacienteHolder holder, int position, @NonNull Paciente model)
+    {
+        //Se obtienen los datos del modelo, que seran mostrados
         holder.textViewNombre.setText(model.getNombre());
         holder.textViewTelefono.setText(model.getTelefono());
         holder.textViewEdad.setText(String.valueOf(model.getEdad()));
@@ -30,7 +34,8 @@ public class PacienteAdaptador extends FirestoreRecyclerAdapter<Paciente,Pacient
 
     @NonNull
     @Override
-    public PacienteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PacienteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_paciente,parent,false);
         return new PacienteHolder(vista);
     }
@@ -41,21 +46,24 @@ public class PacienteAdaptador extends FirestoreRecyclerAdapter<Paciente,Pacient
         getSnapshots().getSnapshot(posicion).getReference().delete();
     }
 
-    class PacienteHolder extends  RecyclerView.ViewHolder{
+    class PacienteHolder extends  RecyclerView.ViewHolder
+    {
         TextView textViewNombre;
         TextView textViewTelefono;
         TextView textViewEdad;
 
-
-        public PacienteHolder(@NonNull View itemView) {
+        public PacienteHolder(@NonNull View itemView)
+        {
             super(itemView);
             textViewNombre=itemView.findViewById(R.id.nombre_paciente_item);
             textViewTelefono=itemView.findViewById(R.id.telefono_paciente_item);
             textViewEdad=itemView.findViewById(R.id.edad_paciente_item);
             //Habiliar clic en el item
-            itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view)
+                {
                     int posicion = getAdapterPosition();
                     if (posicion!= RecyclerView.NO_POSITION && listener != null)
                     {

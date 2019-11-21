@@ -1,29 +1,28 @@
 package com.proyecto.mipaciente.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -31,10 +30,16 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 import com.proyecto.mipaciente.R;
-import com.proyecto.mipaciente.fragments.ui.pacientes.ListarPacientes;
 import com.proyecto.mipaciente.modelos.Paciente;
+import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
 
 public class RegistrarPaciente extends AppCompatActivity implements AdapterView.OnItemSelectedListener
@@ -55,16 +60,22 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     private TextView fechaNacimientoTextView;
     private String fecha;
     private String sexo;
-    private String correoExiste="hola";
     private int anioI;
     private int mesI;
     private int diaI;
     private boolean sexoSeleccionado=false;
     private boolean fechaSeleccionada=false;
     private ProgressDialog progressDialog;
+    private ImageView imagenPacienteImageView;
+    private Uri imagenPacienteUri;
 
-    FirebaseFirestore bd;
+    private FirebaseFirestore bd;
+    private StorageReference referenciaImagen;
+    private StorageTask evitarSpamTask;
     String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+    //Constantes
+    private static final int ESCOGER_IMAGEN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -90,10 +101,19 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
         guardarBtn = findViewById(R.id.btn_guardar_registro_paciente);
         cancelarBtn = findViewById(R.id.btn_cancelar_registro_paciente);
         fechaNacimientoTextView= findViewById(R.id.registro_fecha_nacimiento_paciente);
+        imagenPacienteImageView = findViewById(R.id.registro_imagen_paciente);
         //Inicializacion de la base de datos
         bd = FirebaseFirestore.getInstance();
-
+        referenciaImagen = FirebaseStorage.getInstance().getReference("pacientes");
         obtenerDatosSpinner();
+        String ruta = "android.resource://com.proyecto.mipaciente/drawable/avatar_paciente";
+        imagenPacienteUri= Uri.parse(ruta);
+        imagenPacienteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirFileChooser();
+            }
+        });
 
         fechaNacimientoTextView.setOnClickListener(new View.OnClickListener()
         {
@@ -107,13 +127,24 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
         guardarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Guardar datos
-                if (validarDatos())
-                {
-                    //Verificar si el email existe
-                    obtenerEmail();
-                    //registrarPaciente();
+                //Evitar con el if que el usuario spamie el boton de guardar
+                if (evitarSpamTask!= null && evitarSpamTask.isInProgress()){
+                    Toast.makeText(
+                            RegistrarPaciente.this,
+                            "Registro en progreso",
+                            Toast.LENGTH_SHORT).show();
                 }
+                else
+                {
+                    //Guardar datos
+                    if (validarDatos())
+                    {
+                        //Verificar si el email existe
+                        obtenerEmail();
+                        //registrarPaciente();
+                    }
+                }
+
             }
         });
 
@@ -124,6 +155,33 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                 finish();
             }
         });
+    }
+
+    private void abrirFileChooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,ESCOGER_IMAGEN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==ESCOGER_IMAGEN&&resultCode==RESULT_OK
+        &&data!=null&&data.getData()!=null)
+        {
+            imagenPacienteUri=data.getData();
+            //Poner la imagen en el textview
+            try
+            {
+                Picasso.get().load(imagenPacienteUri).resize(500,500).rotate(-90).into(imagenPacienteImageView);
+            }
+            catch (Exception excepcion)
+            {
+                Toast.makeText(this,"Error al cargar la imagen",Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 
     private boolean validarDatos()
@@ -184,8 +242,9 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
             return false;
         }
     }
-    private void registrarPaciente()
+    private void registrarPaciente(String urlPaciente)
     {
+
         String nombreS = nombre.getText().toString();
         String apellidosS = apellidos.getText().toString();
         String emailS = email.getText().toString();
@@ -211,7 +270,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                 parentescoS,
                 ocupacionS,
                 redSocialS,
-                "email"
+                urlPaciente
         );
         dbPaciente.add(paciente)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
@@ -230,6 +289,46 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                         Toast.makeText(RegistrarPaciente.this, e.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 });
+
+    }
+    private void subirFoto()
+    {
+        if (imagenPacienteUri!=null)
+        {
+            StorageReference referenciaArchivo = referenciaImagen.
+                    child(System.currentTimeMillis()+"."+
+                    getExtensionArchivo(imagenPacienteUri));
+            evitarSpamTask= referenciaArchivo.putFile(imagenPacienteUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                        {
+                            String urlImagen= taskSnapshot.getUploadSessionUri().toString();
+                            registrarPaciente(urlImagen);
+                            progressDialog.dismiss();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(
+                                    RegistrarPaciente.this,
+                                    "No se cargo la imagen",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
+        else
+        {
+            Toast.makeText(this,"No selecciono ninguna foto",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String getExtensionArchivo(Uri uri)
+    {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri));
     }
     private void obtenerEmail()
     {
@@ -260,12 +359,14 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                                     RegistrarPaciente.this,
                                     "El número de telefono ya esta asociado a otro paciente",
                                     Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
                         else
                         {
-                            registrarPaciente();
+                            subirFoto();
+                            //registrarPaciente();
                         }
-                        progressDialog.dismiss();
+
                     }
                 });
         System.out.println("Returning");
@@ -276,7 +377,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
         return email.getText().toString().matches(emailPatron);
     }
 
-    private boolean validarTelefono(){
+    private boolean validarTelefono()
+    {
         return telefono.getText().toString().length() == 10;
     }
 
