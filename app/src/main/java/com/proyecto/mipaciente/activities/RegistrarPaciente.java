@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -303,7 +304,11 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                         {
-                            String urlImagen= taskSnapshot.getUploadSessionUri().toString();
+                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!urlTask.isSuccessful());
+                            Uri descargarUrl = urlTask.getResult();
+                            String urlImagen= descargarUrl.toString();
+                            //Se manda la URL de la imagen
                             registrarPaciente(urlImagen);
                             progressDialog.dismiss();
                         }

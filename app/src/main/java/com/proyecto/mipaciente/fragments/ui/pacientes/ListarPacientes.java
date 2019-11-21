@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -22,6 +23,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.proyecto.mipaciente.R;
 import com.proyecto.mipaciente.activities.RegistrarPaciente;
 import com.proyecto.mipaciente.adaptadores.PacienteAdaptador;
@@ -29,7 +32,7 @@ import com.proyecto.mipaciente.fragments.Inicio;
 import com.proyecto.mipaciente.modelos.Paciente;
 
 
-public class ListarPacientes extends Fragment {
+public class ListarPacientes extends Fragment implements PacienteAdaptador.OnItemClickListener {
 
     private FirebaseFirestore bd;
     private CollectionReference pacienteReferencia;
@@ -44,15 +47,17 @@ public class ListarPacientes extends Fragment {
         View root = inflater.inflate(R.layout.fragment_listar_pacientes, container, false);
         bd=FirebaseFirestore.getInstance();
         pacienteReferencia=bd.collection("paciente");
+        //Ordenar a los pacientes por edad
         Query query = pacienteReferencia.orderBy("edad",Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Paciente> options = new FirestoreRecyclerOptions.Builder<Paciente>()
+        FirestoreRecyclerOptions<Paciente> datosPacientes = new FirestoreRecyclerOptions.Builder<Paciente>()
                 .setQuery(query,Paciente.class)
                 .build();
-        adaptador = new PacienteAdaptador(options);
+        adaptador = new PacienteAdaptador(datosPacientes);
         RecyclerView recyclerView = root.findViewById(R.id.recycler_pacientes);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adaptador);
+        adaptador.setOnItemClickListener(this);
         //Eliminar paciente con un swipe a la izquierda
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT) {
@@ -67,7 +72,7 @@ public class ListarPacientes extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
         //Se manda llamar a la interfaz, ya previamente creada, para hacer una accion al realizar un clic en ella
-        adaptador.setOnItemClickListener(new PacienteAdaptador.OnItemClickListener() {
+        /*adaptador.setOnItemClickListener(new PacienteAdaptador.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int posicion) {
                 Paciente paciente = documentSnapshot.toObject(Paciente.class);
@@ -76,7 +81,7 @@ public class ListarPacientes extends Fragment {
                 Toast.makeText(getContext(),"Posicion: "+posicion+" ID: "+id,Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getContext(),Inicio.class));
             }
-        });
+        });*/
 
         FloatingActionButton botonAgregarPaciente= root.findViewById(R.id.boton_agregar_paciente);
         botonAgregarPaciente.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +94,35 @@ public class ListarPacientes extends Fragment {
         return root;
     }
 
+    @Override
+    public void onItemClick(DocumentSnapshot documentSnapshot, int posicion) {
+        Paciente paciente = documentSnapshot.toObject(Paciente.class);
+        String id = documentSnapshot.getId();
+        String path = documentSnapshot.getReference().getPath();
+        Toast.makeText(getContext(),"Posicion: "+posicion+" ID: "+id,Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getContext(),Inicio.class));
+    }
 
+    @Override
+    public void onItemClick(int posicion) {
+        Toast.makeText(getContext(),"ItemClick: "+posicion,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onLlamarClick(int posicion) {
+        Toast.makeText(getContext(),"Llamar: "+posicion,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onEnviarSmsClick(int posicion) {
+        Toast.makeText(getContext(),"EnviarSMS: "+posicion,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBorrarClick(int posicion) {
+        adaptador.borrarItem(posicion);
+        Toast.makeText(getContext(),"Eliminado",Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public void onStart() {

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ui.pacientes.ListarPacientes">
 
+
     <!-- Main Restaurants recycler -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_pacientes"
