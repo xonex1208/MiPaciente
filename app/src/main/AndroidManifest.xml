@@ -11,14 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.RegistrarPaciente"
-            android:parentActivityName=".fragments.Inicio"/>
+        <activity android:name=".activities.PerfilPaciente"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".activities.RegistrarPaciente"
+            android:parentActivityName=".fragments.Inicio" />
         <activity
             android:name=".fragments.Inicio"
             android:label="@string/title_activity_inicio"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.RegistroUsuarios" />
-        <activity android:name=".activities.RegistroDoctor"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.RegistroDoctor" />
         <activity android:name=".activities.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,6 +1,23 @@
+/**
+ * @Paciente.java 13/octubre/2019
+ *
+ * Copyright 2019 Helix, todos los derechos reservados.
+ */
+
+/**
+ * Clase modelo Paciente para obtener y guardar
+ * los datos en Firebase
+ *
+ * @author Cesar Alfredo Ramirez Orozco
+ * @version 1.0.2 22-noviembre-2019
+
+ * @since 1.0.0
+ */
+
 package com.proyecto.mipaciente.modelos;
 
-public class Paciente {
+public class Paciente
+{
     private String nombre;
     private String apellidos;
     private String email;
@@ -45,7 +62,7 @@ public class Paciente {
 
     public Paciente()
     {
-
+        //Constructor public, requerido para Firebase
     }
 
     public String getNombre()
@@ -58,91 +75,113 @@ public class Paciente {
         this.nombre = nombre;
     }
 
-    public String getApellidos() {
+    public String getApellidos()
+    {
         return apellidos;
     }
 
-    public void setApellidos(String apellidos) {
+    public void setApellidos(String apellidos)
+    {
         this.apellidos = apellidos;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 
-    public String getTelefono() {
+    public String getTelefono()
+    {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(String telefono)
+    {
         this.telefono = telefono;
     }
 
-    public String getFechaNacimiento() {
+    public String getFechaNacimiento()
+    {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento)
+    {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public int getEdad() {
+    public int getEdad()
+    {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(int edad)
+    {
         this.edad = edad;
     }
 
-    public String getSexo() {
+    public String getSexo()
+    {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(String sexo)
+    {
         this.sexo = sexo;
     }
 
-    public String getDireccion() {
+    public String getDireccion()
+    {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
+    public void setDireccion(String direccion)
+    {
         this.direccion = direccion;
     }
 
-    public String getEstadoCivil() {
+    public String getEstadoCivil()
+    {
         return estadoCivil;
     }
 
-    public void setEstadoCivil(String estadoCivil) {
+    public void setEstadoCivil(String estadoCivil)
+    {
         this.estadoCivil = estadoCivil;
     }
 
-    public String getParentesco() {
+    public String getParentesco()
+    {
         return parentesco;
     }
 
-    public void setParentesco(String parentesco) {
+    public void setParentesco(String parentesco)
+    {
         this.parentesco = parentesco;
     }
 
-    public String getOcupacion() {
+    public String getOcupacion()
+    {
         return ocupacion;
     }
 
-    public void setOcupacion(String ocupacion) {
+    public void setOcupacion(String ocupacion)
+    {
         this.ocupacion = ocupacion;
     }
 
-    public String getRedSocial() {
+    public String getRedSocial()
+    {
         return redSocial;
     }
 
-    public void setRedSocial(String redSocial) {
+    public void setRedSocial(String redSocial)
+    {
         this.redSocial = redSocial;
     }
 

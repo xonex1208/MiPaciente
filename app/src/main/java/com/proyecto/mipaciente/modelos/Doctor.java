@@ -1,3 +1,18 @@
+/**
+ * @Doctor.java 17/octubre/2019
+ *
+ * Copyright 2019 Helix, todos los derechos reservados.
+ */
+
+/**
+ * Clase modelo del Doctor para guardar y obtener los datos de Firebase
+ *
+ * @author Cesar Alfredo Ramirez Orozco
+ * @version 1.0.2 22-noviembre-2019
+
+ * @since 0.0.8
+ */
+
 package com.proyecto.mipaciente.modelos;
 
 public class Doctor

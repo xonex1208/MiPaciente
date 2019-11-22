@@ -1,5 +1,18 @@
-package com.proyecto.mipaciente.fragments;
+/**
+ * @Inicio.java 17/octubre/2019
+ *
+ * Copyright 2019 Helix, todos los derechos reservados.
+ */
 
+/**
+ * Clase que contiene a todos los Fragments del NavigationDrawer
+ *
+ * @author Cesar Alfredo Ramirez Orozco
+ * @version 1.0.2 22-noviembre-2019
+
+ * @since 0.0.1
+ */
+package com.proyecto.mipaciente.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -119,10 +132,12 @@ public class Inicio extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
         int id = item.getItemId();
         //Cerrar sesion
-        if(id == R.id.cerrar_sesion){
+        if(id == R.id.cerrar_sesion)
+        {
             autentificarUsuario.signOut();
             startActivity(new Intent(this, Login.class));
             finish();

@@ -3,6 +3,16 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+    <style name="TitulosPerfilPaciente">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/negro</item>
+    </style>
+    <style name="SubtitulosPerfilPaciente">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/gris</item>
     </style>
 </resources>

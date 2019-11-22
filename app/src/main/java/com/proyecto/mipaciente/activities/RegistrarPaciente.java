@@ -1,3 +1,18 @@
+/**
+ * @RegistrarPaciente.java 8/noviembre/2019
+ *
+ * Copyright 2019 Helix, todos los derechos reservados.
+ */
+
+/**
+ * Clase para registrar al paciente
+ *
+ * @author Cesar Alfredo Ramirez Orozco
+ * @version 1.0.2 22-noviembre-2019
+
+ * @since 0.0.9
+ */
+
 package com.proyecto.mipaciente.activities;
 
 import androidx.annotation.NonNull;
@@ -109,9 +124,11 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
         obtenerDatosSpinner();
         String ruta = "android.resource://com.proyecto.mipaciente/drawable/avatar_paciente";
         imagenPacienteUri= Uri.parse(ruta);
-        imagenPacienteImageView.setOnClickListener(new View.OnClickListener() {
+        imagenPacienteImageView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 abrirFileChooser();
             }
         });
@@ -125,11 +142,14 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
             }
         });
         ponerFecha();
-        guardarBtn.setOnClickListener(new View.OnClickListener() {
+        guardarBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 //Evitar con el if que el usuario spamie el boton de guardar
-                if (evitarSpamTask!= null && evitarSpamTask.isInProgress()){
+                if (evitarSpamTask!= null && evitarSpamTask.isInProgress())
+                {
                     Toast.makeText(
                             RegistrarPaciente.this,
                             "Registro en progreso",
@@ -149,7 +169,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
             }
         });
 
-        cancelarBtn.setOnClickListener(new View.OnClickListener() {
+        cancelarBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view)
             {
@@ -158,7 +179,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
         });
     }
 
-    private void abrirFileChooser(){
+    private void abrirFileChooser()
+    {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -166,7 +188,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==ESCOGER_IMAGEN&&resultCode==RESULT_OK
         &&data!=null&&data.getData()!=null)
@@ -197,15 +220,20 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                 ||parentesco.getText().toString().isEmpty()
                 ||redSocial.getText().toString().isEmpty())
         {
-            Toast.makeText(this,"Llene todos los campos",Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    this,
+                    "Llene todos los campos",
+                    Toast.LENGTH_LONG).show();
             return false;
-        }else if (validarEmail())
+        }
+        else if (validarEmail())
         {
             if(sexoSeleccionado)
             {
                 if(fechaSeleccionada)
                 {
-                    if(!validarTelefono()){
+                    if(!validarTelefono())
+                    {
                         Toast.makeText(
                                 this,
                                 "El número del telefono debe tener 10 dígitos",
@@ -226,7 +254,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                             Toast.LENGTH_LONG).show();
                     return false;
                 }
-            }else
+            }
+            else
             {
                 Toast.makeText(
                         this,
@@ -234,7 +263,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                         Toast.LENGTH_LONG).show();
                 return false;
             }
-        }else
+        }
+        else
         {
             Toast.makeText(
                     this,
@@ -300,7 +330,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                     child(System.currentTimeMillis()+"."+
                     getExtensionArchivo(imagenPacienteUri));
             evitarSpamTask= referenciaArchivo.putFile(imagenPacienteUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+                    {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                         {
@@ -313,9 +344,11 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                             progressDialog.dismiss();
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener() {
+                    .addOnFailureListener(new OnFailureListener()
+                    {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
+                        public void onFailure(@NonNull Exception e)
+                        {
                             Toast.makeText(
                                     RegistrarPaciente.this,
                                     "No se cargo la imagen",
@@ -359,7 +392,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                                 isExisting = true;
                             }
                         }
-                        if (isExisting){
+                        if (isExisting)
+                        {
                             Toast.makeText(
                                     RegistrarPaciente.this,
                                     "El número de telefono ya esta asociado a otro paciente",
@@ -389,6 +423,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
 
     private void mostrarFecha()
     {
+        //Mostrar la fecha a seleccionar en un DatePicker
         Calendar calendar= Calendar.getInstance();
         anioI = calendar.get(Calendar.YEAR);
         mesI = calendar.get(Calendar.MONTH);
@@ -397,6 +432,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                 android.R.style.Theme_DeviceDefault_Dialog,
                 fechaNacimiento,
                 anioI,mesI,diaI);
+        //Mandar llamar al datePicker con el tema Transparen
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
@@ -425,7 +461,10 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     private void obtenerDatosSpinner()
     {
         Spinner spinner = findViewById(R.id.registro_sexo_paciente);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.sexo, android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.sexo,
+                android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);

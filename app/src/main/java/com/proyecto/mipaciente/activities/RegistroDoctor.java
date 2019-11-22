@@ -1,3 +1,18 @@
+/**
+ * @RegistroDoctor.java 17/octubre/2019
+ *
+ * Copyright 2019 Helix, todos los derechos reservados.
+ */
+
+/**
+ * Clase para registrar al doctor
+ *
+ * @author Cesar Alfredo Ramirez Orozco
+ * @version 1.0.2 22-noviembre-2019
+
+ * @since 0.0.1
+ */
+
 package com.proyecto.mipaciente.activities;
 
 import androidx.annotation.NonNull;
@@ -59,7 +74,6 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
     private FirebaseFirestore bd;
     private String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -85,9 +99,11 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
         bd = FirebaseFirestore.getInstance();
 
         obtenerDatosSpinner();
-        fechaNacimientoTextView.setOnClickListener(new View.OnClickListener() {
+        fechaNacimientoTextView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 mostrarFecha();
             }
         });
@@ -130,11 +146,12 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
         numeroDeCedula.setText("");
         contrasena.setText("");
         confirmarContrasena.setText("");
-        fechaNacimientoTextView.setText("Fecha de nacimiento");
+        fechaNacimientoTextView.setText(R.string.fecha_nacimiento);
 
     }
 
-    private void registrarUsuarioFirestore(FirebaseAuth autentificarUsuario){
+    private void registrarUsuarioFirestore(FirebaseAuth autentificarUsuario)
+    {
         String emailS = email.getText().toString();
         String nombreS = nombre.getText().toString();
         String apellidosS = apellidos.getText().toString();
@@ -144,7 +161,6 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
         String contrasenaS = contrasena.getText().toString();
         //CollectionReference dbDoctor = bd.collection("doctores");
         //Guardar los datos en el modelo
-
         Doctor doctor = new Doctor(
                 nombreS,
                 apellidosS,
@@ -157,15 +173,19 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
                 sexo
         );
         bd.collection("doctor").document(autentificarUsuario.getUid()).set(doctor).
-                addOnSuccessListener(new OnSuccessListener<Void>() {
+                addOnSuccessListener(new OnSuccessListener<Void>()
+                {
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onSuccess(Void aVoid)
+            {
                 Toast.makeText(RegistroDoctor.this, "Registro existoso",Toast.LENGTH_LONG).show();
                 limpiarCampos();
             }
-        }).addOnFailureListener(new OnFailureListener() {
+        }).addOnFailureListener(new OnFailureListener()
+        {
             @Override
-            public void onFailure(@NonNull Exception e) {
+            public void onFailure(@NonNull Exception e)
+            {
                 Toast.makeText(RegistroDoctor.this, e.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
@@ -178,12 +198,16 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
         progressDialog.setMessage("Cargando...");
         progressDialog.show();
         autentificarUsuario.createUserWithEmailAndPassword(email.getText().toString(), contrasena.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
+                {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull Task<AuthResult> task)
+                    {
                         //Verificar si se pudo registrar
-                        if(!task.isSuccessful()) {
-                            try {
+                        if(!task.isSuccessful())
+                        {
+                            try
+                            {
                                 throw task.getException();
                             }
                             catch(FirebaseAuthUserCollisionException e)
@@ -192,8 +216,9 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
                                         RegistroDoctor.this,
                                         "El email ya existe, intenta con otro",
                                         Toast.LENGTH_LONG).show();
-                            } catch(Exception e) {
-                                System.out.println(e.getMessage());
+                            } catch(Exception e)
+                            {
+                                System.out.println("Error: "+e.getMessage());
                             }
                         }
                         else
@@ -306,11 +331,13 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
         return contrasena.getText().toString().length() >= 8;
     }
 
-    private boolean validarTelefono(){
+    private boolean validarTelefono()
+    {
         return telefono.getText().toString().length() == 10;
     }
 
-    private boolean validarCedula(){
+    private boolean validarCedula()
+    {
         return numeroDeCedula.getText().toString().length() == 8;
     }
 
@@ -326,7 +353,6 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
                 anioI,mesI,diaI);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
-
     }
 
     private void ponerFecha()
@@ -353,7 +379,10 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
     private void obtenerDatosSpinner()
     {
         Spinner spinner = findViewById(R.id.registro_sexo);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.sexo, android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.sexo,
+                android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
@@ -379,7 +408,6 @@ public class RegistroDoctor extends AppCompatActivity implements AdapterView.OnI
     {
     }
     //Obtener datos de firestore
-
     /*private void obtenerDatos(){
         bd.collection("persona").whereEqualTo("nombre","Alfred")
                 .get()

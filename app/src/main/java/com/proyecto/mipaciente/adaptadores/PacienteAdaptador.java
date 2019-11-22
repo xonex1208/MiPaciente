@@ -1,3 +1,18 @@
+/**
+ * @PacienteAdaptador.java 8/noviembre/2019
+ *
+ * Copyright 2019 Helix, todos los derechos reservados.
+ */
+
+/**
+ * Clase adapatadora para obtener datos de Firebase
+ *
+ * @author Cesar Alfredo Ramirez Orozco
+ * @version 1.0.2 22-noviembre-2019
+
+ * @since 1.0.0
+ */
+
 package com.proyecto.mipaciente.adaptadores;
 
 import android.view.ContextMenu;
@@ -57,13 +72,15 @@ public class PacienteAdaptador extends FirestoreRecyclerAdapter<Paciente,Pacient
 
     public void borrarItem(final int posicion)
     {
-        final int position= posicion;
+        //Borrar documento y fotografia del Paciente de la BD
         firebaseStorage = FirebaseStorage.getInstance();
         StorageReference imagenReferencia = firebaseStorage.getReferenceFromUrl(urlPaciente);
-        imagenReferencia.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        imagenReferencia.delete().addOnSuccessListener(new OnSuccessListener<Void>()
+        {
             @Override
-            public void onSuccess(Void aVoid) {
-                getSnapshots().getSnapshot(position).getReference().delete();
+            public void onSuccess(Void aVoid)
+            {
+                getSnapshots().getSnapshot(posicion).getReference().delete();
             }
         });
         //Eliminar paciente con delete, y se le envia la posicion del documento a eliminar
@@ -81,7 +98,6 @@ public class PacienteAdaptador extends FirestoreRecyclerAdapter<Paciente,Pacient
         TextView textViewTelefono;
         TextView textViewEdad;
         ImageView imageViewAvatar;
-        String urlImangen;
 
         public PacienteHolder(@NonNull View itemView)
         {
@@ -105,7 +121,6 @@ public class PacienteAdaptador extends FirestoreRecyclerAdapter<Paciente,Pacient
                     }
                 }
             });
-
         }
 
         @Override

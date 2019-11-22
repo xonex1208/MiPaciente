@@ -7,6 +7,7 @@
     <string name="login">Iniciar sesión</string>
     <string name="entrar">Entrar</string>
     <string name="email">E-mail</string>
+    <string name="correo">Correo electronico</string>
     <string name="telefono">Telefono</string>
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
@@ -14,11 +15,14 @@
     <string name="estado_civil">Estado civil</string>
     <string name="filtroTitulo">Filtro</string>
     <string name="edad">Edad</string>
+    <string name="sexo">Sexo</string>
     <string name="mensaje_sin_resultados">Oops, no hay registros.</string>
     <string name="filtro">Filtrado por nombre</string>
     <string name="titulo_error_sesion">Error cerrar sesión</string>
     <string name="intentar_de_nuevo">Intentar de nuevo</string>
     <string name="salir">Salir</string>
+    <string name="fecha_nacimiento">Fecha de nacimeinto</string>
+    <string name="enviar_sms">Enviar SMS</string>
     <string name="contrasena">Contraseña</string>
     <string name="registrar_paciente">Registrar paciente</string>
     <string name="error_iniciar_sesion">Error al iniciar sesión</string>
