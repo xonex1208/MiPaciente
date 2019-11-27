@@ -79,8 +79,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     private int anioI;
     private int mesI;
     private int diaI;
-    private boolean sexoSeleccionado=false;
-    private boolean fechaSeleccionada=false;
+    private boolean sexoSeleccionado = false;
+    private boolean fechaSeleccionada = false;
     private ProgressDialog progressDialog;
     private ImageView imagenPacienteImageView;
     private Uri imagenPacienteUri;
@@ -191,8 +191,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==ESCOGER_IMAGEN&&resultCode==RESULT_OK
-        &&data!=null&&data.getData()!=null)
+        if (requestCode == ESCOGER_IMAGEN && resultCode == RESULT_OK
+        && data != null && data.getData() != null)
         {
             imagenPacienteUri=data.getData();
             //Poner la imagen en el textview
@@ -232,7 +232,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
             {
                 if(fechaSeleccionada)
                 {
-                    if(!validarTelefono())
+                    if( ! validarTelefono())
                     {
                         Toast.makeText(
                                 this,
@@ -324,7 +324,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     }
     private void subirFoto()
     {
-        if (imagenPacienteUri!=null)
+        if (imagenPacienteUri != null)
         {
             StorageReference referenciaArchivo = referenciaImagen.
                     child(System.currentTimeMillis()+"."+

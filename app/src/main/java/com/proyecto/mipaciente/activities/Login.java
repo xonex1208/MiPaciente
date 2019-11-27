@@ -114,12 +114,18 @@ public class Login extends AppCompatActivity implements OnClickListener
         {
             if (TextUtils.isEmpty(usuarioS))
             {
-                Toast.makeText(this, "Se debe ingresar un e-mail", Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                        this,
+                        "Se debe ingresar un e-mail",
+                        Toast.LENGTH_LONG).show();
                 return;
             }
             else if (TextUtils.isEmpty(contrasenaS))
             {
-                Toast.makeText(this, "Falta ingresar la contraseña", Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                        this,
+                        "Falta ingresar la contraseña",
+                        Toast.LENGTH_LONG).show();
                 return;
             }
         }else
