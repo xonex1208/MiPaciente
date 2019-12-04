@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -81,6 +82,12 @@ public class PacienteAdaptador extends FirestoreRecyclerAdapter<Paciente,Pacient
             public void onSuccess(Void aVoid)
             {
                 getSnapshots().getSnapshot(posicion).getReference().delete();
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("NO SE PUDO ELIMINAR LA FOTO");
             }
         });
         //Eliminar paciente con delete, y se le envia la posicion del documento a eliminar

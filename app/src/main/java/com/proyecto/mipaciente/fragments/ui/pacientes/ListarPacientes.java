@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,6 +46,8 @@ public class ListarPacientes extends Fragment implements PacienteAdaptador.OnIte
     private FirebaseFirestore bd;
     private CollectionReference pacienteReferencia;
     private PacienteAdaptador adaptador;
+    private FirebaseAuth autentificarUsuario;
+
     public ListarPacientes()
     {
         // Required empty public constructor
@@ -56,10 +59,12 @@ public class ListarPacientes extends Fragment implements PacienteAdaptador.OnIte
     {
         View root = inflater.inflate(R.layout.fragment_listar_pacientes, container, false);
         bd=FirebaseFirestore.getInstance();
+        autentificarUsuario=FirebaseAuth.getInstance();
         RecyclerView recyclerView = root.findViewById(R.id.recycler_pacientes);
         pacienteReferencia=bd.collection("paciente");
-        //Ordenar a los pacientes por edad
-        Query query = pacienteReferencia.orderBy("edad",Query.Direction.DESCENDING);
+        //Ordenar a los pacientes por edad y obtener solo las pacientes que registro ese doctor
+        Query query = pacienteReferencia.orderBy("edad",Query.Direction.DESCENDING)
+                .whereEqualTo("idDelDoctor",autentificarUsuario.getUid());
         FirestoreRecyclerOptions<Paciente> datosPacientes = new FirestoreRecyclerOptions.Builder<Paciente>()
                 .setQuery(query,Paciente.class)
                 .build();
@@ -129,11 +134,12 @@ public class ListarPacientes extends Fragment implements PacienteAdaptador.OnIte
         String fechaNacimiento=documentSnapshot.getString("fechaNacimiento");
         String email=documentSnapshot.getString("email");
         String urlAvatar=documentSnapshot.getString("imagenPaciente");
-        String path = documentSnapshot.getReference().getPath();
-        Toast.makeText(
-                getContext(),
-                "Posicion: "+posicion+" ID: "+paciente.getApellidos(),
-                Toast.LENGTH_LONG).show();
+        String idDoctor = documentSnapshot.getString("idDelDoctor");
+        String direccion = documentSnapshot.getString("direccion");
+        //Toast.makeText(
+        //        getContext(),
+        //"Posicion: "+posicion+" ID: "+paciente.getApellidos(),
+        //        Toast.LENGTH_LONG).show();
         Intent intent = new Intent(getActivity(),PerfilPaciente.class);
         intent.putExtra("telefono",telefono);
         intent.putExtra("nombre",nombre);
@@ -142,6 +148,8 @@ public class ListarPacientes extends Fragment implements PacienteAdaptador.OnIte
         intent.putExtra("fechaNacimiento",fechaNacimiento);
         intent.putExtra("email",email);
         intent.putExtra("url",urlAvatar);
+        intent.putExtra("direccion",direccion);
+        intent.putExtra("idDoc",idDoctor);
         startActivity(intent);
     }
 

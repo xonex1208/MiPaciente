@@ -30,6 +30,7 @@ public class Paciente
     private String parentesco;
     private String ocupacion;
     private String redSocial;
+    private String idDelDoctor;
     private String imagenPaciente;
 
     public Paciente(String nombre,
@@ -44,7 +45,8 @@ public class Paciente
                     String parentesco,
                     String ocupacion,
                     String redSocial,
-                    String imagenPaciente) {
+                    String imagenPaciente,
+                    String idDelDoctor) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -58,11 +60,20 @@ public class Paciente
         this.ocupacion = ocupacion;
         this.redSocial = redSocial;
         this.imagenPaciente = imagenPaciente;
+        this.idDelDoctor = idDelDoctor;
     }
 
     public Paciente()
     {
         //Constructor public, requerido para Firebase
+    }
+
+    public String getIdDelDoctor() {
+        return idDelDoctor;
+    }
+
+    public void setIdDelDoctor(String idDelDoctor) {
+        this.idDelDoctor = idDelDoctor;
     }
 
     public String getNombre()

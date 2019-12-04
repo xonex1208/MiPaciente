@@ -71,6 +71,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/fui_transparent"
+                        android:src="@drawable/ic_telefono"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -78,15 +84,26 @@
                         android:textColor="@color/negro"
                         android:textSize="18sp" />
 
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/fui_transparent"
+                        android:src="@drawable/ic_sms_azul"/>
                     <TextView
-                        android:id="@+id/perfil_paciente_telefono"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="@string/telefono"
-                        android:textColor="@color/gris"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        android:text="@string/enviar_sms"
+                        android:textColor="@color/negro"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -97,46 +114,17 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/fui_transparent"
+                        android:src="@drawable/ic_editar_azul"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/enviar_sms"
+                        android:text="@string/editar_perfil"
                         android:textColor="@color/negro"
                         android:textSize="18sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:text="@string/enviar_sms"
-                        android:textColor="@color/gris"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/email"
-                        android:textColor="@color/negro"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:text="@string/email"
-                        android:textColor="@color/gris"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -277,6 +265,79 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="25dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="@dimen/activity_horizontal_margin"
+                        android:text="@string/telefono"
+                        android:theme="@style/TitulosPerfilPaciente"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/perfil_paciente_telefono"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="@dimen/activity_horizontal_margin"
+                        android:text="@string/telefono"
+                        android:theme="@style/SubtitulosPerfilPaciente"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="25dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="@dimen/activity_horizontal_margin"
+                        android:text="@string/direccion"
+                        android:theme="@style/TitulosPerfilPaciente"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/perfil_paciente_direccion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="@dimen/activity_horizontal_margin"
+                        android:text="@string/direccion"
+                        android:theme="@style/SubtitulosPerfilPaciente"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/perfil_paciente_historialBoton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blanco"
+                    android:text="@string/historial_paciente"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/boton_primario"/>
+
+                <Button
+                    android:id="@+id/perfil_paciente_citasBoton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blanco"
+                    android:text="@string/horario_citas"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/boton_primario"/>
 
             </LinearLayout>
         </ScrollView>

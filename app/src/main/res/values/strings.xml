@@ -28,10 +28,13 @@
     <string name="error_iniciar_sesion">Error al iniciar sesión</string>
     <string name="sin_internet">No hay internet</string>
     <string name="mensaje_desconocido">Error desconocido</string>
+    <string name="historial_paciente">Historial médico</string>
+    <string name="horario_citas">Horario de citas</string>
+    <string name="editar_perfil">Editar perfil</string>
 
 
     <string-array name="sexo">
-        <item>Sexo</item>
+        <item>Municipio</item>
         <item>Masculino</item>
         <item>Femenino</item>
     </string-array>

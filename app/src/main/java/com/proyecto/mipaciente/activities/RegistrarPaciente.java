@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -54,8 +55,6 @@ import com.proyecto.mipaciente.R;
 import com.proyecto.mipaciente.modelos.Paciente;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Calendar;
 
 public class RegistrarPaciente extends AppCompatActivity implements AdapterView.OnItemSelectedListener
@@ -88,6 +87,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     private FirebaseFirestore bd;
     private StorageReference referenciaImagen;
     private StorageTask evitarSpamTask;
+    private FirebaseAuth autentificarUsuario;
     String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     //Constantes
@@ -118,9 +118,13 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
         cancelarBtn = findViewById(R.id.btn_cancelar_registro_paciente);
         fechaNacimientoTextView= findViewById(R.id.registro_fecha_nacimiento_paciente);
         imagenPacienteImageView = findViewById(R.id.registro_imagen_paciente);
+
         //Inicializacion de la base de datos
         bd = FirebaseFirestore.getInstance();
+        //Inicializar FirebaseStorage en la carpeta pacientes
         referenciaImagen = FirebaseStorage.getInstance().getReference("pacientes");
+        //Inicializar Firebase Auth
+        autentificarUsuario = FirebaseAuth.getInstance();
         obtenerDatosSpinner();
         String ruta = "android.resource://com.proyecto.mipaciente/drawable/avatar_paciente";
         imagenPacienteUri= Uri.parse(ruta);
@@ -161,7 +165,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                     if (validarDatos())
                     {
                         //Verificar si el email existe
-                        obtenerEmail();
+                        verificarTelefono();
                         //registrarPaciente();
                     }
                 }
@@ -178,6 +182,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
             }
         });
     }
+
+
 
     private void abrirFileChooser()
     {
@@ -275,7 +281,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     }
     private void registrarPaciente(String urlPaciente)
     {
-
+        String uidDoctor=autentificarUsuario.getUid();
         String nombreS = nombre.getText().toString();
         String apellidosS = apellidos.getText().toString();
         String emailS = email.getText().toString();
@@ -301,7 +307,8 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                 parentescoS,
                 ocupacionS,
                 redSocialS,
-                urlPaciente
+                urlPaciente,
+                uidDoctor
         );
         dbPaciente.add(paciente)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
@@ -368,11 +375,14 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(contentResolver.getType(uri));
     }
-    private void obtenerEmail()
+    private void verificarTelefono()
     {
         progressDialog.setMessage("Cargando...");
         progressDialog.show();
-        bd.collection("paciente").whereEqualTo("telefono",telefono.getText().toString())
+        //Obtener el numero de telefono y validar si existe del Doctor logeando actualemente
+        bd.collection("paciente")
+                .whereEqualTo("idDelDoctor",autentificarUsuario.getUid())
+                .whereEqualTo("telefono",telefono.getText().toString())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
                 {
