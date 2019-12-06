@@ -52,6 +52,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.proyecto.mipaciente.R;
+import com.proyecto.mipaciente.modelos.ExpedientePaciente;
 import com.proyecto.mipaciente.modelos.Paciente;
 import com.squareup.picasso.Picasso;
 
@@ -88,6 +89,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     private StorageReference referenciaImagen;
     private StorageTask evitarSpamTask;
     private FirebaseAuth autentificarUsuario;
+    private DocumentReference documentReference;
     String emailPatron = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     //Constantes
@@ -279,6 +281,7 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
             return false;
         }
     }
+
     private void registrarPaciente(String urlPaciente)
     {
         String uidDoctor=autentificarUsuario.getUid();
@@ -310,12 +313,15 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                 urlPaciente,
                 uidDoctor
         );
-        dbPaciente.add(paciente)
+
+        dbPaciente
+                .add(paciente)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
                 {
                     @Override
                     public void onSuccess(DocumentReference documentReference)
                     {
+                        registrarExpediente(documentReference.getId());
                         Toast.makeText(RegistrarPaciente.this, "Registro existoso",Toast.LENGTH_LONG).show();
                     }
                 })
@@ -328,6 +334,35 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
                     }
                 });
 
+
+    }
+
+    private void registrarExpediente(String iDpaciente)
+    {
+        //Registro del expediente del Paciente
+        documentReference=bd.collection("expedienteClinico").document(iDpaciente);
+
+        ExpedientePaciente expedientePaciente = new ExpedientePaciente(
+                false,
+                false,
+                false,
+                false,
+                false,
+                "",
+                iDpaciente
+        );
+        bd.collection("expedienteClinico").document(iDpaciente)
+                .set(expedientePaciente).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("HOLa","REGISTRO EXITOSO EXPEDIENTE");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("HOLa","FALLO AL REGISTRAR EXPEDIENTE");
+            }
+        });
     }
     private void subirFoto()
     {

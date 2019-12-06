@@ -586,7 +586,7 @@ public class EditarPerfil extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.eliminar_icono:
+            /*case R.id.eliminar_icono:
                 final AlertDialog.Builder pop = new AlertDialog.Builder(this);
                 pop.setMessage("¿Estas seguro de eliminar el registro?\n" +
                         "Esta acción no puede revertirse");
@@ -603,7 +603,7 @@ public class EditarPerfil extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
                 pop.show();
-                break;
+                break;*/
             case R.id.cerrar_icono_normal:
                 finish();
                 break;

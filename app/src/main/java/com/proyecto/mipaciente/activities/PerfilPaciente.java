@@ -15,8 +15,11 @@
 
 package com.proyecto.mipaciente.activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +27,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.proyecto.mipaciente.R;
 import com.squareup.picasso.Picasso;
 
@@ -44,6 +50,8 @@ public class PerfilPaciente extends AppCompatActivity
     private String urlAvatar;
 
 
+    private FirebaseFirestore bd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -57,6 +65,7 @@ public class PerfilPaciente extends AppCompatActivity
         sexo = findViewById(R.id.perfil_paciente_sexo);
         avatarPaciente= findViewById(R.id.perfil_paciente_avatar);
         direccion= findViewById(R.id.perfil_paciente_direccion);
+        bd=FirebaseFirestore.getInstance();
         Bundle bundle= getIntent().getExtras();
 
         if(!bundle.isEmpty())
@@ -102,11 +111,58 @@ public class PerfilPaciente extends AppCompatActivity
             }
         });
 
-        findViewById(R.id.perfil_paciente_actualizar).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.perfil_paciente_eliminar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recreate();
+                eliminarPaciente();
             }
         });
+
+        findViewById(R.id.perfil_paciente_historialBoton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PerfilPaciente.this,ExpedienteClinico.class);
+                intent.putExtra("idPaciente",idPaciente);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void eliminarDatos()
+    {
+        bd.collection("paciente").document(idPaciente)
+                .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(PerfilPaciente.this,"Paciente eliminado",Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(PerfilPaciente.this,"Error al eliminar el paciente",Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void eliminarPaciente()
+    {
+        final AlertDialog.Builder pop = new AlertDialog.Builder(this);
+        pop.setMessage("¿Estas seguro de eliminar el registro?\n" +
+                "Esta acción no puede revertirse");
+        pop.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                eliminarDatos();
+            }
+        });
+        pop.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        pop.show();
     }
 }

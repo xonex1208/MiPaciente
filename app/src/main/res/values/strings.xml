@@ -24,6 +24,8 @@
     <string name="salir">Salir</string>
     <string name="fecha_nacimiento">Fecha de nacimeinto</string>
     <string name="enviar_sms">Enviar SMS</string>
+    <string name="red_social">Red Social</string>
+    <string name="expediente">Expediente clínico</string>
     <string name="contrasena">Contraseña</string>
     <string name="registrar_paciente">Registrar paciente</string>
     <string name="error_iniciar_sesion">Error al iniciar sesión</string>
@@ -32,6 +34,14 @@
     <string name="historial_paciente">Historial médico</string>
     <string name="horario_citas">Horario de citas</string>
     <string name="editar_perfil">Editar perfil</string>
+    <string name="alergias">Alergias</string>
+    <string name="embarazo">Embarazo</string>
+    <string name="extraccion_dental">Extracción dental</string>
+    <string name="medicamento">Ingiere medicamento</string>
+    <string name="enfermedades">Enfermedades</string>
+    <string name="hospitalizado">Hospitalizado</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
 
 
     <string-array name="sexo">

@@ -146,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="Red Social">
+                android:hint="@string/red_social">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/registro_red_social_paciente"
                     android:layout_width="match_parent"
@@ -162,7 +162,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:textSize="18sp"
-                android:text="Fecha de nacimiento" />
+                android:text="@string/fecha_nacimiento" />
 
             <Spinner
                 android:id="@+id/registro_sexo_paciente"

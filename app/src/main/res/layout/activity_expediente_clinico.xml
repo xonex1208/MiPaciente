@@ -1,24 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.ExpedienteClinico">
 
+    <include
+        android:id="@+id/toolbarExpedienteClinico"
+        layout="@layout/toolbar"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="344dp"
-        android:layout_marginEnd="132dp"
-        android:text="Expediente"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.987"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/expediente_enfermedades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/enfermedades">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alergias"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/negro"
+                android:layout_gravity="center"
+                android:textSize="25sp"/>
+
+            <Switch
+                android:id="@+id/expediente_alergias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:textSize="25sp"
+                android:text="@string/no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/embarazo"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/negro"
+                android:textSize="25sp"/>
+
+            <Switch
+                android:id="@+id/expediente_embarazo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25sp"
+                android:text="@string/no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/extraccion_dental"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/negro"
+                android:textSize="25sp"/>
+
+            <Switch
+                android:id="@+id/expediente_extraccion_dental"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:text="@string/no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/medicamento"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/negro"
+                android:textSize="25sp"/>
+
+            <Switch
+                android:id="@+id/expediente_medicamento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:text="@string/no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hospitalizado"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/negro"
+                android:textSize="25sp"/>
+
+            <Switch
+                android:id="@+id/expediente_hospitalizado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:text="@string/no" />
+
+            <LinearLayout
+                android:id="@+id/expediente_layout_botones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/expediente_cancelarBoton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/boton_secundario"
+                    android:text="@string/cancelar"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/blanco"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="15sp" />
+                <Button
+                    android:id="@+id/expediente_guardarDatosBoton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/boton_primario"
+                    android:text="@string/modificar"
+                    android:layout_weight="1"
+                    android:textColor="@color/blanco"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
