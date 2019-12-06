@@ -2,6 +2,7 @@
     <string name="app_name">MiPaciente</string>
     <string name="registro_doctor">Registrate</string>
     <string name="registrarse">Registrarse</string>
+    <string name="modificar">Modificar</string>
     <string name="cancelar">Cancelar</string>
     <string name="clinica">MiPaciente</string>
     <string name="login">Iniciar sesión</string>
@@ -34,7 +35,7 @@
 
 
     <string-array name="sexo">
-        <item>Municipio</item>
+        <item>Seleccione su sexo</item>
         <item>Masculino</item>
         <item>Femenino</item>
     </string-array>

@@ -23,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,6 +138,8 @@ public class ListarPacientes extends Fragment implements PacienteAdaptador.OnIte
         String urlAvatar=documentSnapshot.getString("imagenPaciente");
         String idDoctor = documentSnapshot.getString("idDelDoctor");
         String direccion = documentSnapshot.getString("direccion");
+        String idPaciente = documentSnapshot.getId();
+        Log.d("PAc","ID PACIENTE: "+idPaciente);
         //Toast.makeText(
         //        getContext(),
         //"Posicion: "+posicion+" ID: "+paciente.getApellidos(),
@@ -150,6 +154,7 @@ public class ListarPacientes extends Fragment implements PacienteAdaptador.OnIte
         intent.putExtra("url",urlAvatar);
         intent.putExtra("direccion",direccion);
         intent.putExtra("idDoc",idDoctor);
+        intent.putExtra("idPaciente",idPaciente);
         startActivity(intent);
     }
 

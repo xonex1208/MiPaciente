@@ -40,6 +40,8 @@ public class PerfilPaciente extends AppCompatActivity
     private TextView direccion;
     private ImageView avatarPaciente;
 
+    private String idPaciente;
+    private String urlAvatar;
 
 
     @Override
@@ -59,6 +61,7 @@ public class PerfilPaciente extends AppCompatActivity
 
         if(!bundle.isEmpty())
         {
+            idPaciente=getIntent().getExtras().getString("idPaciente");
             telefono.setText(getIntent().getExtras().getString("telefono"));
             nombre.setText(getIntent().getExtras().getString("nombre"));
             email.setText(getIntent().getExtras().getString("email"));
@@ -66,7 +69,8 @@ public class PerfilPaciente extends AppCompatActivity
             fechaNacimiento.setText(getIntent().getExtras().getString("fechaNacimiento"));
             sexo.setText(getIntent().getExtras().getString("sexo"));
             direccion.setText(getIntent().getExtras().getString("direccion"));
-            Toast.makeText(this,"ID: "+getIntent().getExtras().get("idDoc"),Toast.LENGTH_LONG).show();
+            urlAvatar=getIntent().getExtras().getString("url");
+            Toast.makeText(this,"ID: "+getIntent().getExtras().get("idPaciente"),Toast.LENGTH_LONG).show();
             Picasso.get().load(getIntent().getExtras().getString("url")).fit().centerCrop().into(avatarPaciente);
         }
         else
@@ -78,6 +82,30 @@ public class PerfilPaciente extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PerfilPaciente.this,ExpedienteClinico.class));
+            }
+        });
+
+        findViewById(R.id.perfil_paciente_editarPerfil).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(PerfilPaciente.this,EditarPerfil.class);
+                intent.putExtra("pacienteID",idPaciente);
+                intent.putExtra("urlImagen",urlAvatar);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.perfil_paciente_cerrar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        findViewById(R.id.perfil_paciente_actualizar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recreate();
             }
         });
     }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/eliminar_icono"
+        android:title=""
+        android:icon="@drawable/ic_eliminar"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/cerrar_icono_normal"
+        android:title=""
+        android:icon="@drawable/ic_cerrar"
+        app:showAsAction="ifRoom"/>
+</menu>
