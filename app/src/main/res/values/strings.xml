@@ -10,6 +10,7 @@
     <string name="email">E-mail</string>
     <string name="correo">Correo electronico</string>
     <string name="telefono">Telefono</string>
+    <string name="llamar">Llamar</string>
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
     <string name="direccion">Dirección</string>

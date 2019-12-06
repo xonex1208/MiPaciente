@@ -3,6 +3,7 @@
     package="com.proyecto.mipaciente">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -22,7 +23,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.RegistrarPaciente"
-            android:parentActivityName=".fragments.Inicio" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".fragments.Inicio"
             android:label="@string/title_activity_inicio"

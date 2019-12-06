@@ -18,6 +18,8 @@ package com.proyecto.mipaciente.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -27,6 +29,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -102,8 +106,9 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_registrar_paciente);
         Button guardarBtn;
         Button cancelarBtn;
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cerrar);
-        getSupportActionBar().setTitle("Agregar Paciente");
+        Toolbar toolbar = findViewById(R.id.toolbarRegistarPaciente);
+        toolbar.setTitle("Agregar paciente");
+        setSupportActionBar(toolbar);
 
         progressDialog = new ProgressDialog(this);
         nombre = findViewById(R.id.registro_nombre_paciente);
@@ -533,5 +538,23 @@ public class RegistrarPaciente extends AppCompatActivity implements AdapterView.
     @Override
     public void onNothingSelected(AdapterView<?> adapterView)
     {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar_v1,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.cerrar_icono_normal:
+                finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
